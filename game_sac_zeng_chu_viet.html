@@ -1,0 +1,3808 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SẮC ZÈNG CHỮ VIỆT - Trò Chơi Học Tập Tiếng Việt 1 & Xóa Mù Chữ A Lưới</title>
+  <!-- Favicon / Web App Icon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="shortcut icon" href="assets/favicon.ico">
+  <meta name="theme-color" content="#1971c2">
+  
+  <!-- Font chữ tiếng Việt chuẩn nét, to rõ cho lớp học -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,600;1,800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       HỆ THỐNG BIẾN MÀU SẮC THỔ CẨM ZÈNG PA CÔ & GIAO DIỆN LỚP HỌC 16:9
+       ========================================================================== */
+    :root {
+      /* Bảng màu dệt Zèng truyền thống A Lưới */
+      --zeng-red: #c92a2a;
+      --zeng-red-dark: #a61e1e;
+      --zeng-orange: #d9480f;
+      --zeng-gold: #f59f00;
+      --zeng-gold-light: #fff3bf;
+      --zeng-blue: #1864ab;
+      --zeng-blue-dark: #0f4880;
+      --zeng-cyan: #1098ad;
+      --zeng-green: #2b8a3e;
+      --zeng-charcoal: #1e2022;
+      --zeng-bead-white: #f8f9fa;
+      --surface-card: #ffffff;
+      --surface-glass: rgba(255, 255, 255, 0.94);
+      --shadow-elevation: 0 10px 30px rgba(0, 0, 0, 0.25);
+      --font-main: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Nunito', 'Be Vietnam Pro', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-main);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #0d131f;
+      color: #1e293b;
+      user-select: none;
+    }
+
+    /* KHUNG BAO TOÀN MÀN HÌNH CHUẨN THUYẾT TRÌNH & MÁY CHIẾU LỚP HỌC (KHÔNG VIỀN ĐEN) */
+    #projector-stage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #0b1120;
+      display: flex;
+      flex-direction: column;
+      box-shadow: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* DẢI VIỀN HOA VĂN THỔ CẨM ZÈNG PA CÔ */
+    .zeng-weave-border {
+      height: 6px;
+      width: 100%;
+      background: repeating-linear-gradient(
+        45deg,
+        #c92a2a 0px, #c92a2a 16px,
+        #f59f00 16px, #f59f00 32px,
+        #2b8a3e 32px, #2b8a3e 48px,
+        #1864ab 48px, #1864ab 64px,
+        #1e2022 64px, #1e2022 80px,
+        #f8f9fa 80px, #f8f9fa 96px
+      );
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      z-index: 50;
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       HEADER & BẢNG ĐIỂM 2 ĐỘI & THANH CÔNG CỤ GIÁO VIÊN
+       ========================================================================== */
+    header {
+      background: var(--surface-glass);
+      backdrop-filter: blur(10px);
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #e2e8f0;
+      z-index: 40;
+      flex-shrink: 0;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Cụm Tiêu Đề */
+    .brand-cluster {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--zeng-red), var(--zeng-gold));
+      border: 2px solid #ffffff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(201, 42, 42, 0.4);
+    }
+
+    .brand-title-box h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      font-family: var(--font-display);
+      background: linear-gradient(90deg, #b02a37, #d9480f, #2b8a3e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .brand-title-box p {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .station-now-tag {
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 1px 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    /* Bảng Điểm 2 Đội */
+    .scoreboard-hud {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .team-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 14px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 2.5px solid transparent;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+
+    /* Đội 1: A Keng (Đỏ Dèng) */
+    .team-card.team-1 {
+      border-color: #fca5a5;
+      background: #fff5f5;
+    }
+
+    .team-card.team-1.active-turn {
+      border-color: var(--zeng-red);
+      background: #ffe3e3;
+      transform: scale(1.04);
+      box-shadow: 0 0 20px rgba(201, 42, 42, 0.45);
+    }
+
+    /* Đội 2: A Mây (Xanh Dèng) */
+    .team-card.team-2 {
+      border-color: #93c5fd;
+      background: #f0f7ff;
+    }
+
+    .team-card.team-2.active-turn {
+      border-color: var(--zeng-blue);
+      background: #dbeafe;
+      transform: scale(1.04);
+      box-shadow: 0 0 20px rgba(24, 100, 171, 0.45);
+    }
+
+    .team-avatar-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      border: 2px solid currentColor;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      position: relative;
+    }
+
+    .team-info-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .team-name-lbl {
+      font-size: 0.82rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .team-status-lbl {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    .team-score-star {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      background: #ffffff;
+      padding: 3px 8px;
+      border-radius: 8px;
+      border: 1.5px solid #e2e8f0;
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: #b45309;
+    }
+
+    .turn-indicator-pill {
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #e11d48;
+      color: #ffffff;
+      font-size: 0.62rem;
+      font-weight: 900;
+      padding: 1px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: 0 2px 6px rgba(225, 29, 72, 0.4);
+      display: none;
+      animation: pulseIndicator 1.4s infinite;
+    }
+
+    .active-turn .turn-indicator-pill {
+      display: block;
+    }
+
+    @keyframes pulseIndicator {
+      0%, 100% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.1); }
+    }
+
+    /* Thanh Điều Khiển Của Giáo Viên (Teacher Toolbox) */
+    .teacher-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-tool {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #334155;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-tool:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+      color: #0f172a;
+      transform: translateY(-1px);
+    }
+
+    .btn-tool.btn-primary {
+      background: #e0f2fe;
+      border-color: #7dd3fc;
+      color: #0284c7;
+    }
+
+    .btn-tool.btn-primary:hover {
+      background: #bae6fd;
+    }
+
+    /* ==========================================================================
+       KHÔNG GIAN TRÒ CHƠI CHÍNH: BẢN ĐỒ 24 Ô PHIÊU LƯU A LƯỚI
+       ========================================================================== */
+    .game-arena {
+      flex: 1;
+      position: relative;
+      background: #0f172a;
+      overflow: hidden;
+      display: flex;
+    }
+
+    /* Nền Bản Đồ Hoạt Họa A Lưới */
+    .map-canvas-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    }
+
+    .map-background-img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      opacity: 0.82;
+      filter: saturate(1.18) contrast(1.08);
+    }
+
+    /* SVG đường mòn uốn lượn nối các trạm */
+    .trail-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .trail-line-glow {
+      stroke: #f59f00;
+      stroke-width: 12px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      opacity: 0.35;
+      filter: blur(4px);
+    }
+
+    .trail-line-main {
+      stroke: #fffbeb;
+      stroke-width: 6px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 12 10;
+      fill: none;
+      animation: dashMove 40s linear infinite;
+    }
+
+    @keyframes dashMove {
+      from { stroke-dashoffset: 0; }
+      to { stroke-dashoffset: -1000; }
+    }
+
+    /* LỚP CHỨA CÁC Ô TRẠM BẢN ĐỒ (24 STATIONS) */
+    .station-pins-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      pointer-events: auto;
+    }
+
+    /* ĐIỂM Ô TRẠM */
+    .map-pin {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      z-index: 15;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.25s ease, z-index 0.25s ease;
+    }
+
+    .map-pin:hover {
+      transform: translate(-50%, -50%) scale(1.15);
+      z-index: 35;
+    }
+
+    .pin-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffffff, #f1f5f9);
+      border: 3px solid #64748b;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.15rem;
+      color: #0f172a;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+
+    /* Loại ô: Trạm Chữ Thường */
+    .map-pin.type-word .pin-circle {
+      border-color: #3b82f6;
+      color: #1e3a8a;
+    }
+
+    /* Loại ô: May Mắn / Mùa Vàng */
+    .map-pin.type-bonus .pin-circle {
+      background: linear-gradient(135deg, #fef08a, #f59f00);
+      border-color: #b45309;
+      color: #78350f;
+      box-shadow: 0 0 20px rgba(245, 159, 0, 0.6);
+    }
+
+    /* Loại ô: Suối Mát */
+    .map-pin.type-water .pin-circle {
+      background: linear-gradient(135deg, #bae6fd, #0284c7);
+      border-color: #0369a1;
+      color: #ffffff;
+      box-shadow: 0 0 18px rgba(2, 132, 199, 0.5);
+    }
+
+    /* Loại ô: Xuất phát */
+    .map-pin.station-start .pin-circle {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #4ade80, #16a34a);
+      border: 3.5px solid #ffffff;
+      color: #ffffff;
+      font-size: 1.3rem;
+      box-shadow: 0 0 25px rgba(34, 197, 94, 0.7);
+    }
+
+    /* Loại ô: Về Đích Bản Làng */
+    .map-pin.station-finish .pin-circle {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #f43f5e, #be123c);
+      border: 4px solid #fef08a;
+      color: #ffffff;
+      font-size: 1.4rem;
+      box-shadow: 0 0 30px rgba(244, 63, 94, 0.9);
+      animation: finishPulse 1.8s infinite alternate;
+    }
+
+    @keyframes finishPulse {
+      0% { transform: scale(1); filter: drop-shadow(0 0 10px #f43f5e); }
+      100% { transform: scale(1.1); filter: drop-shadow(0 0 22px #facc15); }
+    }
+
+    /* Nhãn tên địa danh dưới mỗi ô */
+    .pin-label-card {
+      margin-top: 3px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 6px;
+      padding: 1px 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    .pin-label-name {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: #f8fafc;
+      letter-spacing: 0.2px;
+    }
+
+    .pin-label-type {
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: #cbd5e1;
+    }
+
+    /* TOKEN NHÂN VẬT ĐẠI DIỆN 2 ĐỘI DI CHUYỂN */
+    .player-token {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 30;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    /* Token A Keng (Đỏ) */
+    .token-keng {
+      filter: drop-shadow(0 8px 12px rgba(225, 29, 72, 0.6));
+    }
+
+    /* Token A Mây (Xanh) */
+    .token-may {
+      filter: drop-shadow(0 8px 12px rgba(37, 99, 235, 0.6));
+    }
+
+    .token-body {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 3px solid #ffffff;
+      background-size: cover;
+      background-position: center top;
+      background-color: #ffffff;
+      position: relative;
+      animation: tokenHover 2.2s ease-in-out infinite alternate;
+    }
+
+    .token-keng .token-body {
+      border-color: #f43f5e;
+      box-shadow: 0 0 15px rgba(244, 63, 94, 0.8);
+      background-image: url('assets/akeng_idle_cropped.png');
+    }
+
+    .token-may .token-body {
+      border-color: #38bdf8;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
+      background-image: url('assets/amay_idle_cropped.png');
+    }
+
+    .token-tag {
+      margin-top: -6px;
+      padding: 1px 8px;
+      border-radius: 10px;
+      font-size: 0.62rem;
+      font-weight: 900;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      z-index: 2;
+    }
+
+    .token-keng .token-tag { background: #e11d48; }
+    .token-may .token-tag { background: #0284c7; }
+
+    @keyframes tokenHover {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+
+    /* ==========================================================================
+       KHU VỰC ĐIỀU KHIỂN LƯỢT CHƠI (BOTTOM CONTROL BAR - KHÔNG CHE BẢN ĐỒ)
+       ========================================================================== */
+    .bottom-control-bar {
+      height: 68px;
+      flex-shrink: 0;
+      background: linear-gradient(90deg, #0d1424 0%, #162035 50%, #0d1424 100%);
+      border-top: 2px solid rgba(245, 159, 0, 0.4);
+      box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.6);
+      padding: 6px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 40;
+      position: relative;
+    }
+
+    /* Khối bên trái: Lượt chơi & Đội đang đi */
+    .dock-team-zone {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 280px;
+    }
+
+    .dock-team-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      border: 2.5px solid #e11d48;
+      background: #ffffff;
+      box-shadow: 0 0 16px rgba(225, 29, 72, 0.5);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .dock-team-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .dock-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .turn-status-badge {
+      font-size: 0.65rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      padding: 1px 7px;
+      border-radius: 4px;
+    }
+
+    .turn-team-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      font-family: var(--font-display);
+      line-height: 1.1;
+      color: #e11d48;
+      transition: color 0.3s ease;
+    }
+
+    .turn-instruct-tip {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #fcd34d;
+      white-space: nowrap;
+    }
+
+    /* Khối ở giữa: Xúc xắc & Nút Tung Xúc Xắc */
+    .dock-dice-zone {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .dice-cube-wrapper {
+      width: 48px;
+      height: 48px;
+      perspective: 400px;
+    }
+
+    .dice-cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.3, 1);
+      cursor: pointer;
+    }
+
+    .dice-cube.rolling {
+      animation: diceRollAnim 0.75s ease-out infinite;
+    }
+
+    @keyframes diceRollAnim {
+      0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+      25% { transform: rotateX(180deg) rotateY(90deg) rotateZ(45deg); }
+      50% { transform: rotateX(360deg) rotateY(270deg) rotateZ(180deg); }
+      75% { transform: rotateX(540deg) rotateY(180deg) rotateZ(270deg); }
+      100% { transform: rotateX(720deg) rotateY(360deg) rotateZ(360deg); }
+    }
+
+    .dice-face {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      background: #ffffff;
+      border: 2.5px solid #cbd5e1;
+      border-radius: 10px;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: #b91c1c;
+    }
+
+    /* Nút Tung Xúc Xắc To Rõ */
+    .btn-roll-dice {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      color: #ffffff;
+      border: 2px solid #fda4af;
+      padding: 10px 28px;
+      border-radius: 999px;
+      font-size: 1.1rem;
+      font-weight: 900;
+      font-family: var(--font-display);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 18px rgba(225, 29, 72, 0.55);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      letter-spacing: 0.5px;
+    }
+
+    .btn-roll-dice:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 8px 25px rgba(244, 63, 94, 0.75);
+      background: linear-gradient(135deg, #f43f5e, #e11d48);
+    }
+
+    .btn-roll-dice:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    .btn-roll-dice:disabled {
+      background: #64748b;
+      border-color: #94a3b8;
+      cursor: not-allowed;
+      box-shadow: none;
+      opacity: 0.65;
+    }
+
+    .btn-roll-dice.ready-pulse {
+      animation: rollBtnPulse 2.2s infinite ease-in-out;
+    }
+
+    @keyframes rollBtnPulse {
+      0%, 100% { box-shadow: 0 0 15px rgba(225, 29, 72, 0.45); transform: scale(1); }
+      50% { box-shadow: 0 0 25px rgba(244, 63, 94, 0.85); transform: scale(1.03); }
+    }
+
+    /* Khối bên phải: Can thiệp số bước cho Giáo viên */
+    .dock-teacher-zone {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 5px 12px;
+      border-radius: 12px;
+    }
+
+    .teacher-override-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-right: 4px;
+    }
+
+    .dice-num-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: #1e293b;
+      border: 1px solid #475569;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #f1f5f9;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dice-num-btn:hover {
+      background: var(--zeng-gold);
+      border-color: #ffd43b;
+      color: #0f172a;
+      transform: translateY(-2px);
+      box-shadow: 0 0 10px rgba(245, 159, 0, 0.5);
+    }
+
+    /* ==========================================================================
+       CỬA SỔ THỬ THÁCH GHÉP CHỮ TRÊN KHUNG DỆT (CHALLENGE MODAL)
+       ========================================================================== */
+    .modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 15, 26, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .challenge-card {
+      width: 90%;
+      max-width: 920px;
+      max-height: 94%;
+      background: #ffffff;
+      border-radius: 20px;
+      border: 3.5px solid var(--zeng-gold);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.92);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-overlay.open .challenge-card {
+      transform: scale(1);
+    }
+
+    /* Đầu Thẻ Thử Thách */
+    .card-top-bar {
+      background: linear-gradient(135deg, #c92a2a, #d9480f);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #ffffff;
+    }
+
+    .card-station-tag {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .station-number-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #c92a2a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.15rem;
+      border: 2px solid #ffd8a8;
+    }
+
+    .station-title-text h2 {
+      font-size: 1.25rem;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .station-title-text p {
+      font-size: 0.78rem;
+      color: #ffe8cc;
+      font-weight: 600;
+    }
+
+    .turn-team-badge-modal {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 900;
+      background: #ffffff;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Thân Thẻ Thử Thách */
+    .card-body-content {
+      padding: 18px 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Hộp câu hỏi gợi mở cho học viên */
+    .question-prompt-box {
+      background: #fff9db;
+      border-left: 6px solid #f59f00;
+      border-radius: 10px;
+      padding: 12px 18px;
+    }
+
+    .prompt-subtitle {
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: #b45309;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .prompt-main-question {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #451a03;
+      line-height: 1.4;
+    }
+
+    /* MÔ PHỎNG KHUNG DỆT CHỮ VẬT LÝ */
+    .loom-workstation-box {
+      background: #f8fafc;
+      border: 2px dashed #94a3b8;
+      border-radius: 14px;
+      padding: 14px 18px;
+    }
+
+    .loom-guide-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .loom-guide-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .loom-sub-note {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    /* 3 Ô ĐẠI DIỆN THẺ TRÊN KHUNG DỆT */
+    .loom-slots-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .loom-slot-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 10px;
+      border: 2px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    }
+
+    .slot-type-header {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .slot-onset .slot-type-header { color: #16a34a; }
+    .slot-rime .slot-type-header { color: #ea580c; }
+    .slot-tone .slot-type-header { color: #dc2626; }
+
+    .slot-value-preview {
+      width: 100%;
+      height: 56px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 900;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .slot-onset .slot-value-preview {
+      background: #dcfce7;
+      color: #166534;
+      border-color: #86efac;
+    }
+
+    .slot-rime .slot-value-preview {
+      background: #ffedd5;
+      color: #9a3412;
+      border-color: #fdba74;
+    }
+
+    .slot-tone .slot-value-preview {
+      background: #fee2e2;
+      color: #991b1b;
+      border-color: #fca5a5;
+    }
+
+    .slot-value-preview.masked {
+      background: #f1f5f9;
+      color: #94a3b8;
+      border-color: #cbd5e1;
+      font-size: 1.5rem;
+    }
+
+    /* KHU VỰC TỪ KHÓA & ĐÁNH VẦN CHO GIÁO VIÊN */
+    .answer-reveal-box {
+      background: #eef2ff;
+      border: 1.5px solid #c7d2fe;
+      border-radius: 12px;
+      padding: 10px 16px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .answer-reveal-box.show {
+      display: block;
+    }
+
+    .reveal-keyword-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .reveal-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #3730a3;
+      text-transform: uppercase;
+    }
+
+    .reveal-word {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #1e1b4b;
+      letter-spacing: 1px;
+    }
+
+    .reveal-spelling {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #4338ca;
+    }
+
+    .cultural-lore-note {
+      font-size: 0.76rem;
+      color: #475569;
+      font-style: italic;
+      line-height: 1.35;
+      margin-top: 4px;
+    }
+
+    /* CỤM NÚT PHÁT ÂM ĐÁNH VẦN VÀ TIẾNG PA CÔ */
+    .audio-voice-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .btn-voice {
+      padding: 7px 14px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .btn-voice:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    .btn-voice-smart {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      color: #92400e;
+      border-color: #f59e0b;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+    }
+    .btn-voice-smart:hover {
+      background: linear-gradient(135deg, #fde68a, #fcd34d);
+      border-color: #d97706;
+      transform: translateY(-2px);
+    }
+
+    .btn-voice-female {
+      background: #fff1f2;
+      color: #e11d48;
+      border-color: #fecdd3;
+    }
+    .btn-voice-female:hover {
+      background: #ffe4e6;
+      border-color: #fda4af;
+    }
+
+    .btn-voice-male {
+      background: #f0f9ff;
+      color: #0284c7;
+      border-color: #bae6fd;
+    }
+    .btn-voice-male:hover {
+      background: #e0f2fe;
+      border-color: #7dd3fc;
+    }
+
+    .btn-voice-paco {
+      background: #f0fdf4;
+      color: #166534;
+      border-color: #bbf7d0;
+    }
+    .btn-voice-paco:hover {
+      background: #dcfce7;
+      border-color: #86efac;
+    }
+
+    .paco-language-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fefce8;
+      border: 1.5px solid #fef08a;
+      padding: 4px 12px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #854d0e;
+    }
+
+    /* THANH NÚT ĐIỀU KHIỂN CỦA GIÁO VIÊN TRONG MODAL */
+    .teacher-action-footer {
+      background: #f8fafc;
+      border-top: 2px solid #e2e8f0;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .aux-tools-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-aux {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #334155;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-aux:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .verdict-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-verdict {
+      padding: 10px 22px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 900;
+      font-family: var(--font-display);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .btn-verdict:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-retry {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 2px solid #fca5a5;
+    }
+
+    .btn-retry:hover {
+      background: #fecaca;
+    }
+
+    .btn-correct {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(22, 163, 74, 0.4);
+    }
+
+    .btn-correct:hover {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      box-shadow: 0 6px 20px rgba(22, 163, 74, 0.6);
+    }
+
+    /* ==========================================================================
+       MODAL KẾT THÚC & VINH DANH CHIẾN THẮNG
+       ========================================================================== */
+    .victory-modal-card {
+      width: 90%;
+      max-width: 680px;
+      background: #ffffff;
+      border-radius: 24px;
+      border: 4px solid var(--zeng-gold);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7);
+      text-align: center;
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .victory-trophy {
+      font-size: 4.5rem;
+      animation: trophyBounce 1.2s infinite alternate ease-in-out;
+      margin-bottom: 6px;
+    }
+
+    @keyframes trophyBounce {
+      0% { transform: scale(1) translateY(0); }
+      100% { transform: scale(1.15) translateY(-10px); }
+    }
+
+    .victory-title {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #b45309;
+      text-transform: uppercase;
+      font-family: var(--font-display);
+      margin-bottom: 6px;
+    }
+
+    .victory-subtitle {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 20px;
+    }
+
+    .winner-highlight-card {
+      background: #fefce8;
+      border: 2.5px dashed #ca8a04;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .team-victory-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .team-victory-name {
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+
+    .team-victory-score {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #b45309;
+    }
+
+    .victory-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* MODAL QUẢN LÝ CÂU HỎI (TEACHER EDITOR) */
+    .editor-modal-card {
+      width: 92%;
+      max-width: 900px;
+      max-height: 90%;
+      background: #ffffff;
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 3px solid #0284c7;
+    }
+
+    .editor-header {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .editor-body {
+      padding: 16px 20px;
+      overflow-y: auto;
+      max-height: 520px;
+    }
+
+    .editor-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    .editor-table th, .editor-table td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    .editor-table th {
+      background: #f1f5f9;
+      font-weight: 800;
+      color: #334155;
+    }
+
+    .editor-table input {
+      width: 100%;
+      padding: 4px 6px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
+    /* HIỆU ỨNG PHÁO HOA / CONFETTI CANVAS */
+    #confetti-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 90;
+    }
+
+    /* TOAST THÔNG BÁO TỔNG QUÁT */
+    .toast-banner {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: #1e293b;
+      color: #ffffff;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      z-index: 120;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid var(--zeng-gold);
+    }
+
+    .toast-banner.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* TIỆN ÍCH HIỂN THỊ */
+    .hidden { display: none !important; }
+  
+    /* ==========================================================================
+       TIẾN TRÌNH ĐƯỜNG ĐI TRÊN BẢN ĐỒ (PROGRESSIVE TRAIL - ĐẾN ĐÂU HIỆN ĐẾN ĐÓ)
+       ========================================================================== */
+    .map-pin.pin-undiscovered {
+      opacity: 0.38;
+      filter: grayscale(0.65);
+      transition: all 0.4s ease;
+    }
+
+    .map-pin.pin-undiscovered .pin-circle {
+      border-color: #64748b;
+      box-shadow: none;
+    }
+
+    .map-pin.pin-discovered {
+      opacity: 1;
+      filter: none;
+      animation: pinDiscoveredGlow 3s infinite ease-in-out;
+    }
+
+    @keyframes pinDiscoveredGlow {
+      0%, 100% { filter: drop-shadow(0 0 4px rgba(245, 159, 0, 0.4)); }
+      50% { filter: drop-shadow(0 0 12px rgba(245, 159, 0, 0.85)); }
+    }
+
+    /* ==========================================================================
+       HOẠT ĐỘNG DỆT DÈNG Ở GIỮA MÀN HÌNH KHI TUNG XÚC XẮC (LOOM DICE OVERLAY)
+       ========================================================================== */
+    .loom-dice-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 180;
+      background: rgba(8, 12, 22, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .loom-dice-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .loom-dice-modal {
+      width: 90%;
+      max-width: 600px;
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      border: 3.5px solid var(--zeng-gold);
+      border-radius: 28px;
+      padding: 30px 24px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px rgba(245, 159, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transform: scale(0.85);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .loom-dice-overlay.active .loom-dice-modal {
+      transform: scale(1);
+    }
+
+    .loom-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .loom-modal-header h3 {
+      font-size: 1.45rem;
+      font-weight: 900;
+      font-family: var(--font-display);
+      color: #ffd43b;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 10px rgba(245, 159, 0, 0.5);
+    }
+
+    /* Khung dệt Zèng 3D trung tâm */
+    .zeng-loom-stage {
+      width: 100%;
+      max-width: 460px;
+      height: 140px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 2px dashed rgba(245, 159, 0, 0.5);
+      border-radius: 18px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
+    }
+
+    /* Các sợi chỉ dọc (Warp Threads) dệt Dèng */
+    .loom-threads-warp {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: space-around;
+      padding: 0 20px;
+      pointer-events: none;
+    }
+
+    .loom-threads-warp .thread {
+      width: 3px;
+      height: 100%;
+      opacity: 0.7;
+    }
+    .thread.t-red { background: linear-gradient(180deg, #c92a2a, #f87171, #c92a2a); }
+    .thread.t-gold { background: linear-gradient(180deg, #f59f00, #fef08a, #f59f00); }
+    .thread.t-blue { background: linear-gradient(180deg, #0284c7, #38bdf8, #0284c7); }
+    .thread.t-dark { background: linear-gradient(180deg, #334155, #64748b, #334155); }
+
+    /* Con thoi dệt Dèng (Wooden Shuttle) lướt qua lại */
+    .loom-shuttle {
+      position: absolute;
+      width: 90px;
+      height: 32px;
+      background: linear-gradient(135deg, #b45309, #d97706);
+      border: 2px solid #fef08a;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6), 0 0 15px rgba(245, 159, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      animation: shuttleWeaveAnim 0.75s ease-in-out infinite alternate;
+    }
+
+    .loom-shuttle::after {
+      content: '🧵';
+      font-size: 16px;
+    }
+
+    @keyframes shuttleWeaveAnim {
+      0% { transform: translateX(-160px) rotate(-6deg); }
+      100% { transform: translateX(160px) rotate(6deg); }
+    }
+
+    /* Kết quả con số xúc xắc bung tỏa từ tâm khung dệt */
+    .loom-dice-result {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dice-giant-number-wrap {
+      width: 96px;
+      height: 96px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #ffffff, #f1f5f9);
+      border: 4px solid var(--zeng-gold);
+      box-shadow: 0 0 35px rgba(245, 159, 0, 0.8), inset 0 0 15px rgba(245, 159, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.6rem;
+      font-weight: 900;
+      font-family: var(--font-display);
+      color: #b91c1c;
+      transform: scale(0.6);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .loom-dice-result.revealed .dice-giant-number-wrap {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+
+    .loom-result-badge {
+      font-size: 1.15rem;
+      font-weight: 900;
+      padding: 8px 20px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      color: #f1f5f9;
+      letter-spacing: 0.5px;
+    }
+
+  
+    /* ==========================================================================
+       MASCOT NHÂN VẬT A-KENG / A-MÂY DỄ THƯƠNG Ở GÓC TRÁI TRONG BẢN ĐỒ
+       ========================================================================== */
+    .map-mascot-standee {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      z-index: 25;
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      pointer-events: auto;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,0.6));
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .mascot-avatar-cutout {
+      width: 76px;
+      height: 106px;
+      object-fit: contain;
+      cursor: pointer;
+      animation: mascotBounce 2.5s infinite ease-in-out;
+      transition: transform 0.25s ease;
+    }
+
+    .mascot-avatar-cutout:hover {
+      transform: scale(1.12) rotate(4deg);
+    }
+
+    @keyframes mascotBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .mascot-speech-bubble {
+      background: #ffffff;
+      border: 2.5px solid var(--zeng-gold);
+      border-radius: 14px 14px 14px 2px;
+      padding: 6px 12px;
+      max-width: 175px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.35);
+      margin-bottom: 22px;
+      animation: bubbleFloat 3s infinite ease-in-out;
+    }
+
+    @keyframes bubbleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .mascot-bubble-title {
+      font-size: 0.78rem;
+      font-weight: 900;
+      margin-bottom: 2px;
+      letter-spacing: 0.5px;
+    }
+
+    .mascot-bubble-desc {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #334155;
+      line-height: 1.25;
+    }
+
+    /* Dòng giải thích nghĩa tiếng Việt trong modal */
+    .vietnamese-meaning-box {
+      background: #f8fafc;
+      border-left: 4px solid #0284c7;
+      border-radius: 8px;
+      padding: 8px 14px;
+      margin: 8px 0;
+      font-size: 0.88rem;
+      color: #1e293b;
+      line-height: 1.4;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .meaning-label {
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #0284c7;
+      letter-spacing: 0.5px;
+    }
+
+    .meaning-text {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+  
+    /* Ảnh đại diện thực tế cho Đội A Keng và Đội A Mây */
+    .team-avatar-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2.5px solid currentColor;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .team-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transform: scale(1.15) translateY(2px);
+    }
+
+    .dock-team-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2.5px solid #e11d48;
+      background: #ffffff;
+      box-shadow: 0 0 16px rgba(225, 29, 72, 0.5);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .dock-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transform: scale(1.15) translateY(2px);
+    }
+
+    /* Mascot góc trái dưới bản đồ: Cân đối, chân chạm cỏ, có đuôi thoại gắn kết */
+    .map-mascot-corner {
+      position: absolute;
+      bottom: 0px;
+      left: 8px;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: auto;
+    }
+
+    .corner-mascot-img {
+      width: 140px;
+      height: 250px;
+      object-fit: contain;
+      object-position: bottom left;
+      cursor: pointer;
+      animation: cornerMascotBounce 2.8s infinite ease-in-out;
+      transition: transform 0.25s ease;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.55));
+      flex-shrink: 0;
+    }
+
+    .corner-mascot-img:hover {
+      transform: scale(1.08) translateY(-4px);
+    }
+
+    @keyframes cornerMascotBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Khung bóng thoại ôm sát, ngang tầm người, có đuôi tam giác chỉ vào nhân vật */
+    .corner-mascot-bubble {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 2.5px solid var(--zeng-gold);
+      border-radius: 16px;
+      padding: 8px 14px;
+      width: fit-content;
+      max-width: 195px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+      position: relative;
+      margin-bottom: 45px;
+      margin-left: 4px;
+      animation: bubbleFloat 3s infinite ease-in-out;
+    }
+
+    /* Đuôi tam giác trỏ từ bóng thoại về nhân vật */
+    .corner-mascot-bubble::before {
+      content: '';
+      position: absolute;
+      left: -11px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-right: 11px solid var(--zeng-gold);
+    }
+
+    .corner-mascot-bubble::after {
+      content: '';
+      position: absolute;
+      left: -7px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-right: 8px solid #ffffff;
+    }
+
+    .corner-bubble-title {
+      font-size: 0.86rem;
+      font-weight: 900;
+      font-family: var(--font-display);
+      margin-bottom: 3px;
+      letter-spacing: 0.5px;
+    }
+
+    .corner-bubble-msg {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #1e293b;
+      line-height: 1.32;
+      white-space: normal;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- KHUNG HIỂN THỊ CHUẨN 16:9 DÀNH CHO MÁY CHIẾU LỚP HỌC -->
+  <main id="projector-stage">
+    
+    <!-- VIỀN THỔ CẨM ZÈNG PA CÔ TRÊN ĐỈNH -->
+    <div class="zeng-weave-border"></div>
+
+    <!-- HEADER: TIÊU ĐỀ - BẢNG ĐIỂM 2 ĐỘI - THANH CÔNG CỤ GIÁO VIÊN -->
+    <header>
+      <!-- Cụm thương hiệu bài dạy -->
+      <div class="brand-cluster">
+        
+        <div class="brand-title-box">
+          <h1>SẮC ZÈNG CHỮ VIỆT</h1>
+        </div>
+      </div>
+
+      <!-- Bảng điểm 2 Đội -->
+      <div class="scoreboard-hud">
+        <!-- Đội 1: A Keng (Đỏ) -->
+        <div class="team-card team-1 active-turn" id="hud-team-1">
+          <div class="turn-indicator-pill">ĐANG ĐẾN LƯỢT</div>
+          <div class="team-avatar-badge team-keng-avatar" style="color: #e11d48;">
+            <img src="assets/akeng_idle_cropped.png" alt="A Keng" class="team-avatar-img">
+          </div>
+          <div class="team-info-col">
+            <span class="team-name-lbl" style="color: #e11d48;">ĐỘI A KENG</span>
+            <span class="team-status-lbl" id="status-team-1">Tại Cổng Khởi Hành</span>
+          </div>
+          <div class="team-score-star">
+            <span>⭐</span>
+            <span id="score-team-1">0</span>
+          </div>
+        </div>
+
+        <!-- Đội 2: A Mây (Xanh) -->
+        <div class="team-card team-2" id="hud-team-2">
+          <div class="turn-indicator-pill">ĐANG ĐẾN LƯỢT</div>
+          <div class="team-avatar-badge team-may-avatar" style="color: #0284c7;">
+            <img src="assets/amay_idle_cropped.png" alt="A Mây" class="team-avatar-img">
+          </div>
+          <div class="team-info-col">
+            <span class="team-name-lbl" style="color: #0284c7;">ĐỘI A MÂY</span>
+            <span class="team-status-lbl" id="status-team-2">Tại Cổng Khởi Hành</span>
+          </div>
+          <div class="team-score-star">
+            <span>⭐</span>
+            <span id="score-team-2">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thanh công cụ hỗ trợ Giáo viên -->
+      <div class="teacher-controls">
+        <button class="btn-tool" id="btn-toggle-sound" title="Bật/Tắt âm thanh">
+          <span id="sound-icon">🔊</span> Âm thanh
+        </button>
+        <button class="btn-tool" id="btn-undo-turn" title="Hoàn tác lượt vừa đi nếu bấm nhầm">
+          Hoàn tác
+        </button>
+        <button class="btn-tool btn-primary" id="btn-open-editor" title="Chỉnh sửa câu hỏi 20 ô theo giáo án">
+          Soạn bài
+        </button>
+        <button class="btn-tool" id="btn-toggle-fullscreen" title="Phóng to toàn màn hình máy chiếu">
+          Toàn màn hình
+        </button>
+        <button class="btn-tool" id="btn-reset-game" title="Bắt đầu ván chơi mới">
+          Chơi lại
+        </button>
+      </div>
+    </header>
+
+    <!-- KHÔNG GIAN BẢN ĐỒ 20 Ô DANH THẮNG A LƯỚI -->
+    <div class="game-arena">
+      <!-- Lớp ảnh nền bản đồ núi rừng A Lưới -->
+      <div class="map-canvas-wrapper">
+        <img src="assets/Colorful Mountain Valley Adventure Map.png" alt="Bản đồ A Lưới" class="map-background-img">
+        
+        <!-- Đường mòn uốn lượn SVG nối 24 trạm -->
+        <svg class="trail-svg" id="trail-svg" viewBox="0 0 1000 562" preserveAspectRatio="none">
+          <path id="trail-path-glow" class="trail-line-glow" d="" />
+          <path id="trail-path-main" class="trail-line-main" d="" />
+        </svg>
+
+        <!-- Lớp gắn 24 ô trạm định vị -->
+        <div class="station-pins-layer" id="station-pins-container"></div>
+
+        <!-- 2 Token nhân vật đại diện di chuyển -->
+        <div class="player-token token-keng" id="token-team-1">
+          <div class="token-body"></div>
+          <div class="token-tag">A KENG</div>
+        </div>
+
+        <div class="player-token token-may" id="token-team-2">
+          <div class="token-body"></div>
+          <div class="token-tag">A MÂY</div>
+        </div>
+      </div>
+
+      <!-- BẠN NHỎ A-KENG / A-MÂY CỔ VŨ Ở GÓC TRÁI DƯỚI BẢN ĐỒ (RỘNG RÃI, THOÁNG ĐÃNG) -->
+      <div class="map-mascot-corner" id="map-mascot-corner">
+        <img src="assets/akeng_play_cropped.png" alt="Mascot A-Keng" class="corner-mascot-img" id="map-mascot-img" title="Bấm vào để nghe tiếng vui!">
+        <div class="corner-mascot-bubble" id="map-mascot-bubble">
+          <div class="corner-bubble-title" id="map-mascot-title" style="color: #e11d48;">ĐỘI A KENG</div>
+          <div class="corner-bubble-msg" id="map-mascot-desc">A-Keng thổi khèn cổ vũ bà con dệt chữ!</div>
+        </div>
+      </div>
+      </div>
+
+    </div>
+
+    <!-- THANH ĐIỀU KHIỂN LƯỢT CHƠI (BOTTOM ACTION BAR - TÁCH RỜI KHỎI BẢN ĐỒ, KHÔNG BỊ CHE) -->
+    <footer class="bottom-control-bar" id="bottom-control-bar">
+      <!-- 1. Bên trái: Thông tin đội đang thực hiện lượt -->
+      <div class="dock-team-zone">
+        <div class="dock-team-avatar" id="dock-team-avatar">
+          <img src="assets/akeng_idle_cropped.png" alt="Lượt đi" class="dock-avatar-img" id="dock-avatar-img">
+        </div>
+        <div class="dock-team-info">
+          <div class="dock-meta-row">
+            <span class="turn-status-badge" id="dock-phase-badge">SẴN SÀNG</span>
+            <span class="turn-instruct-tip" id="dock-instruct-tip">Nhấn "Tung Xúc Xắc" để di chuyển!</span>
+          </div>
+          <div class="turn-team-title" id="dock-team-title">Lượt: Đội A Keng</div>
+        </div>
+      </div>
+
+      <!-- 2. Ở giữa: Xúc xắc & Nút Tung Xúc Xắc to rõ -->
+      <div class="dock-dice-zone">
+        <div class="dice-cube-wrapper">
+          <div class="dice-cube" id="dice-cube-elem" title="Chạm để tung xúc xắc">
+            <div class="dice-face" id="dice-face-display">⚅</div>
+          </div>
+        </div>
+
+        <button class="btn-roll-dice ready-pulse" id="btn-roll-dice">
+          TUNG XÚC XẮC
+        </button>
+      </div>
+
+      <!-- 3. Bên phải: Tùy chọn Giáo viên can thiệp nhanh số bước đi -->
+      <div class="dock-teacher-zone" title="Giáo viên chọn nhanh số bước">
+        <span class="teacher-override-label">Chọn bước:</span>
+        <button class="dice-num-btn" data-step="1">1</button>
+        <button class="dice-num-btn" data-step="2">2</button>
+        <button class="dice-num-btn" data-step="3">3</button>
+        <button class="dice-num-btn" data-step="4">4</button>
+        <button class="dice-num-btn" data-step="5">5</button>
+        <button class="dice-num-btn" data-step="6">6</button>
+      </div>
+    </footer>
+
+    <!-- DẢI VIỀN HOA VĂN THỔ CẨM ZÈNG DƯỚI ĐÁY -->
+    <div class="zeng-weave-border"></div>
+
+    <!-- CANVAS HIỆU ỨNG ĂN MỪNG PHÁO HOA -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- TOAST THÔNG BÁO NHANH -->
+    <div class="toast-banner" id="toast-banner">
+      <span id="toast-icon">✨</span>
+      <span id="toast-msg">Chào mừng đến với Sắc Zèng Chữ Việt!</span>
+    </div>
+
+    <!-- ==========================================================================
+         CỬA SỔ THỬ THÁCH GHÉP CHỮ TRÊN KHUNG DỆT (CHALLENGE MODAL)
+         ========================================================================== -->
+    <div class="modal-overlay" id="modal-challenge">
+      <div class="challenge-card">
+        
+        <!-- Thanh đầu thẻ thử thách -->
+        <div class="card-top-bar">
+          <div class="card-station-tag">
+            <div class="station-number-badge" id="modal-station-num">1</div>
+            <div class="station-title-text">
+              <h2 id="modal-station-name">Thác A Nôr Hùng Vĩ</h2>
+              <p id="modal-station-type">TRẠM THỬ THÁCH GHÉP CHỮ</p>
+            </div>
+          </div>
+
+          <div class="turn-team-badge-modal" id="modal-team-indicator">
+            <span>👦</span> Đội A Keng đang thực hiện
+          </div>
+        </div>
+
+        <!-- Thân thẻ: Câu hỏi gợi mở & Hướng dẫn ghép thẻ -->
+        <div class="card-body-content">
+          
+          <!-- Hộp câu hỏi gợi mở -->
+          <div class="question-prompt-box">
+            <div class="prompt-main-question" id="modal-question-text">
+              Nơi gia đình mình cùng quây quần bên bếp lửa ấm cúng ngày đêm. Đố bạn gọi là cái gì?
+            </div>
+          </div>
+
+          <!-- MÔ HỎNG KHUNG DỆT CHỮ VẬT LÝ -->
+          <div class="loom-workstation-box">
+            <div class="loom-guide-header">
+              <div class="loom-guide-title">
+                <strong>KHUNG DỆT CHỮ</strong>
+              </div>
+            </div>
+
+            <!-- 3 Cột thẻ đại diện: Âm đầu - Vần - Thanh -->
+            <div class="loom-slots-grid">
+              <!-- Cột 1: Âm Đầu -->
+              <div class="loom-slot-card slot-onset">
+                <span class="slot-type-header">Âm Đầu</span>
+                <div class="slot-value-preview masked" id="slot-onset-display">?</div>
+              </div>
+
+              <!-- Cột 2: Vần -->
+              <div class="loom-slot-card slot-rime">
+                <span class="slot-type-header">Vần</span>
+                <div class="slot-value-preview masked" id="slot-rime-display">?</div>
+              </div>
+
+              <!-- Cột 3: Thanh Điệu -->
+              <div class="loom-slot-card slot-tone">
+                <span class="slot-type-header">Dấu Thanh</span>
+                <div class="slot-value-preview masked" id="slot-tone-display">?</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Khu vực hiển thị Từ Khóa, Đánh Vần & Tiếng Pa Cô -->
+          <div class="answer-reveal-box" id="modal-answer-box">
+            <div class="reveal-keyword-row">
+              <span class="reveal-label">Từ Khóa:</span>
+              <span class="reveal-word" id="modal-target-word">HỌC</span>
+              <span class="reveal-spelling" id="modal-spelling-text">(Hờ - oc - hóc - nặng - HỌC)</span>
+            </div>
+            
+            
+            <!-- Dòng giải thích nghĩa tiếng Việt -->
+            <div class="vietnamese-meaning-box" id="modal-meaning-box">
+              <span class="meaning-label">Nghĩa tiếng Việt:</span>
+              <span class="meaning-text" id="modal-meaning-text">Tiếp thu kiến thức, rèn luyện đọc viết.</span>
+            </div>
+            <div style="margin: 8px 0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <span class="paco-language-badge" id="modal-paco-badge">
+                Tiếng Pa Cô: <strong id="modal-paco-word">Nao học</strong>
+              </span>
+            </div>
+
+            <!-- Cụm nút âm thanh 2 giọng AI tiếng Việt + Tiếng Pa Cô -->
+            <div class="audio-voice-group">
+              <button class="btn-voice btn-voice-smart" id="btn-speak-team" title="Nghe phát âm đánh vần theo nhân vật">
+                Đọc từ khóa
+              </button>
+              <button class="btn-voice btn-voice-paco" id="btn-speak-paco" title="Phát âm tiếng Pa Cô">
+                Tiếng Pa Cô
+              </button>
+            </div>
+
+            </div>
+
+        </div>
+
+        <!-- Thanh nút điều khiển dành cho Giáo Viên -->
+        <div class="teacher-action-footer">
+          <div class="aux-tools-group">
+            <button class="btn-aux" id="btn-show-hint" title="Hiển thị gợi ý âm/vần">
+              Gợi ý
+            </button>
+            <button class="btn-aux" id="btn-show-answer" title="Mở từ khóa và cách đánh vần">
+              Hiện đáp án
+            </button>
+            </div>
+
+          <div class="verdict-actions-group">
+            <button class="btn-verdict btn-retry" id="btn-verdict-retry">
+              Chưa đúng
+            </button>
+            <button class="btn-verdict btn-correct" id="btn-verdict-correct">
+              Đúng rồi
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         CỬA SỔ TỔNG KẾT & VINH DANH CHIẾN THẮNG (VICTORY MODAL)
+         ========================================================================== -->
+    <div class="modal-overlay" id="modal-victory">
+      <div class="victory-modal-card">
+        <div class="victory-trophy">🏆</div>
+        <h2 class="victory-title" id="victory-headline">ĐẠI HỘI SẮC ZÈNG</h2>
+        <p class="victory-subtitle" id="victory-subtext">Chúc mừng hai đội đã hoàn thành xuất sắc hành trình học chữ tại A Lưới!</p>
+        
+        <div class="winner-highlight-card">
+          <div class="team-victory-slot">
+            <span style="font-size: 2.2rem;">👦</span>
+            <span class="team-victory-name" style="color: #e11d48;">ĐỘI A KENG</span>
+            <span class="team-victory-score" id="victory-score-1">0 ⭐</span>
+          </div>
+
+          <div style="font-size: 1.8rem; font-weight: 900; color: #94a3b8;">VS</div>
+
+          <div class="team-victory-slot">
+            <span style="font-size: 2.2rem;">👧</span>
+            <span class="team-victory-name" style="color: #0284c7;">ĐỘI A MÂY</span>
+            <span class="team-victory-score" id="victory-score-2">0 ⭐</span>
+          </div>
+        </div>
+
+        <div class="victory-actions">
+          <button class="btn-verdict btn-correct" id="btn-victory-restart">
+            🔄 BẮT ĐẦU VÁN MỚI
+          </button>
+          <button class="btn-aux" id="btn-victory-close">
+            Đóng bảng
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         CỬA SỔ SOẠN BÀI / CHỈNH SỬA CÂU HỎI 24 Ô (TEACHER EDITOR MODAL)
+         ========================================================================== -->
+    <div class="modal-overlay" id="modal-editor">
+      <div class="editor-modal-card">
+        <div class="editor-header">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size: 1.2rem;">📝</span>
+            <strong style="font-size: 1.1rem;">BỘ BIÊN TẬP CÂU HỎI & TỪ KHÓA 24 Ô BẢN ĐỒ</strong>
+          </div>
+          <button class="btn-tool" id="btn-close-editor">Đóng</button>
+        </div>
+
+        <div class="editor-body">
+          <p style="font-size: 0.76rem; color: #64748b; margin-bottom: 10px;">
+            * Giáo viên có thể nhập câu hỏi, từ khóa, âm đầu, vần và thanh điệu phù hợp với từng tiết dạy của SGK Tiếng Việt 1. Dữ liệu sẽ tự động lưu lại trên máy tính này.
+          </p>
+          <table class="editor-table">
+            <thead>
+              <tr>
+                <th style="width: 45px;">Ô</th>
+                <th style="width: 140px;">Địa Danh A Lưới</th>
+                <th style="width: 100px;">Từ Khóa</th>
+                <th style="width: 60px;">Âm</th>
+                <th style="width: 60px;">Vần</th>
+                <th style="width: 60px;">Thanh</th>
+                <th>Câu Hỏi Gợi Mở Cho Học Viên</th>
+              </tr>
+            </thead>
+            <tbody id="editor-table-rows">
+              <!-- Sẽ render động qua JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div style="background: #f8fafc; padding: 10px 20px; display:flex; justify-content: flex-end; gap: 8px; border-top: 1px solid #cbd5e1;">
+          <button class="btn-aux" id="btn-reset-default-data">Khôi phục mặc định</button>
+          <button class="btn-verdict btn-correct" id="btn-save-editor">💾 Lưu Thay Đổi</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==========================================================================
+       LOGIC TRÒ CHƠI SẮC ZÈNG CHỮ VIỆT - JAVASCRIPT
+       ========================================================================== -->
+  <script>
+    /* ==========================================================================
+       1. CẤU HÌNH DỮ LIỆU BẢN ĐỒ 24 Ô DANH THẮNG A LƯỚI & TỪ VỰNG TIẾNG VIỆT 1
+       (Tách rời hoàn toàn khỏi giao diện để dễ bảo trì và mở rộng)
+       ========================================================================== */
+            const DEFAULT_STATIONS = [
+      {
+        id: 0,
+        x: 37.0, y: 48.0,
+        type: 'start',
+        name: "Cổng Khởi Hành",
+        landmark: "Cổng trường (Điểm Khởi Hành)",
+        targetWord: "BẮT ĐẦU",
+        onset: "", rime: "", tone: "",
+        spelling: "Khởi hành Sắc Zèng Chữ Việt",
+        vietMeaning: "Khởi hành chuyến phiêu lưu dệt chữ qua 20 chặng bản làng A Lưới.",
+        question: "Cổng xuất phát Sắc Zèng Chữ Việt khám phá 20 chặng bản làng A Lưới!",
+        pacoWord: "Khởi hành",
+        ttsVi: "Sắc Zèng Chữ Việt, khởi hành!",
+        ttsPaco: "Khởi hành!",
+        bonus: 0
+      },
+      {
+        id: 1,
+        x: 32.5, y: 44.0,
+        type: 'word',
+        name: "Trường Học",
+        landmark: "Lớp học chữ vùng cao",
+        targetWord: "HỌC",
+        onset: "h", rime: "oc", tone: "•",
+        spelling: "Hờ - oc - hóc - nặng - HỌC",
+        vietMeaning: "Tiếp thu kiến thức, rèn luyện đọc viết để mở mang hiểu biết và thắp sáng tương lai.",
+        question: "Mỗi tối bà con cùng nhau đến lớp, mở sách đọc chữ và luyện viết. Đố bạn gọi là đi làm gì?",
+        pacoWord: "Nao học",
+        ttsVi: "Hờ, oc, hóc, nặng, HỌC!",
+        ttsPaco: "Tiếng Pa Cô là: Nao học!",
+        bonus: 10
+      },
+      {
+        id: 2,
+        x: 26.5, y: 46.5,
+        type: 'word',
+        name: "Bàn Gỗ",
+        landmark: "Bàn học nắn nót nét chữ",
+        targetWord: "BÀN",
+        onset: "b", rime: "an", tone: "\\",
+        spelling: "Bờ - an - ban - huyền - BÀN",
+        vietMeaning: "Đồ dùng học tập có mặt phẳng và các chân vững chãi để ngồi kê vở viết chữ.",
+        question: "Cái gì có bốn chân và mặt phẳng, để học viên ngồi kê vở nắn nót viết từng nét chữ?",
+        pacoWord: "Kơ-lơng",
+        ttsVi: "Bờ, an, ban, huyền, BÀN!",
+        ttsPaco: "Tiếng Pa Cô là: Kơ lơng!",
+        bonus: 10
+      },
+      {
+        id: 3,
+        x: 12.0, y: 55.0,
+        type: 'bonus',
+        name: "Ruộng Bậc Thang",
+        landmark: "Mùa lúa chín vàng ươm",
+        targetWord: "GẶT",
+        onset: "g", rime: "ăt", tone: "•",
+        spelling: "Gờ - ăt - găt - nặng - GẶT",
+        vietMeaning: "Công việc dùng liềm cắt những bông lúa chín vàng trĩu hạt trên nương rẫy đem về.",
+        question: "Đến mùa lúa chín vàng rực trên nương, bà con cầm liềm ra đồng làm công việc gì?",
+        pacoWord: "Pah tơ-rô",
+        ttsVi: "Gờ, ăt, găt, nặng, GẶT!",
+        ttsPaco: "Tiếng Pa Cô là: Pah tơ rô!",
+        bonus: 10
+      },
+      {
+        id: 4,
+        x: 21.5, y: 61.5,
+        type: 'word',
+        name: "Cầu Gỗ",
+        landmark: "Cầu bắc qua suối nương bắp",
+        targetWord: "BẮP",
+        onset: "b", rime: "ăp", tone: "/",
+        spelling: "Bờ - ăp - băp - sắc - BẮP",
+        vietMeaning: "Cây lương thực hạt vàng óng ả bọc trong áo bẹ xanh, nướng hay luộc đều thơm ngọt bùi.",
+        question: "Cây lương thực hạt vàng tăm tắp, có áo bẹ bọc ngoài, luộc hay nướng đều thơm ngọt. Đố bạn gọi là gì?",
+        pacoWord: "A-pô",
+        ttsVi: "Bờ, ăp, băp, sắc, BẮP!",
+        ttsPaco: "Tiếng Pa Cô là: A pô!",
+        bonus: 10
+      },
+      {
+        id: 5,
+        x: 30.5, y: 66.5,
+        type: 'word',
+        name: "Bản Làng",
+        landmark: "Bản làng nhà sàn ấm cúng",
+        targetWord: "NHÀ",
+        onset: "nh", rime: "a", tone: "\\",
+        spelling: "Nhờ - a - nha - huyền - NHÀ",
+        vietMeaning: "Mái ấm gia đình sum họp, che mưa che nắng, quây quần bên bếp lửa yêu thương.",
+        question: "Nơi gia đình mình cùng quây quần bên bếp lửa ấm cúng ngày đêm. Đố bạn gọi là cái gì?",
+        pacoWord: "Đung",
+        ttsVi: "Nhờ, a, nha, huyền, NHÀ!",
+        ttsPaco: "Tiếng Pa Cô là: Đung!",
+        bonus: 10
+      },
+      {
+        id: 6,
+        x: 40.5, y: 78.5,
+        type: 'word',
+        name: "Bến Nước",
+        landmark: "Bến nước Pa Cô thanh bình",
+        targetWord: "GÀ",
+        onset: "g", rime: "a", tone: "\\",
+        spelling: "Gờ - a - ga - huyền - GÀ",
+        vietMeaning: "Loài vật nuôi quen thuộc trong bản làng, sớm mai cất tiếng gáy vang báo hiệu ngày mới.",
+        question: "Con vật nuôi dậy sớm cất tiếng gáy vang 'ò ó o' đánh thức bản làng. Đố bạn là con gì?",
+        pacoWord: "A-rớc",
+        ttsVi: "Gờ, a, ga, huyền, GÀ!",
+        ttsPaco: "Tiếng Pa Cô là: A rớc!",
+        bonus: 10
+      },
+      {
+        id: 7,
+        x: 49.0, y: 80.5,
+        type: 'bonus',
+        name: "Cầu Sắt",
+        landmark: "Cầu sắt nối nhịp giao thương",
+        targetWord: "VÀNG",
+        onset: "v", rime: "ang", tone: "\\",
+        spelling: "Vờ - ang - vang - huyền - VÀNG",
+        vietMeaning: "Màu sắc tươi sáng rực rỡ như hoa dã quỳ và ánh nắng mùa lúa chín trên nương cao.",
+        question: "Màu sắc rực rỡ của hoa dã quỳ nở rộ khắp triền đồi A Lưới vào mùa thu. Là màu gì?",
+        pacoWord: "Bông vàng",
+        ttsVi: "Vờ, ang, vang, huyền, VÀNG!",
+        ttsPaco: "Tiếng Pa Cô là: Bông vàng!",
+        bonus: 10
+      },
+      {
+        id: 8,
+        x: 59.0, y: 84.5,
+        type: 'word',
+        name: "Cột Mốc",
+        landmark: "Cột mốc kết nối vùng cao",
+        targetWord: "CỘT",
+        onset: "c", rime: "ôt", tone: "•",
+        spelling: "Cờ - ôt - côt - nặng - CỘT",
+        vietMeaning: "Trụ gỗ hoặc bê tông dựng đứng chắc chắn để nâng đỡ khung nhà sàn vững chãi.",
+        question: "Thân gỗ tròn hoặc bê tông dựng đứng vững chãi để nâng đỡ mái nhà sàn. Đố bạn gọi là cái gì?",
+        pacoWord: "Tơ-nôr đung",
+        ttsVi: "Cờ, ôt, côt, nặng, CỘT!",
+        ttsPaco: "Tiếng Pa Cô là: Tơ nôr đung!",
+        bonus: 10
+      },
+      {
+        id: 9,
+        x: 73.0, y: 83.0,
+        type: 'word',
+        name: "Sân Bay A So",
+        landmark: "Di tích lịch sử A So",
+        targetWord: "PIN",
+        onset: "p", rime: "in", tone: "-",
+        spelling: "Pờ - in - pin",
+        vietMeaning: "Vật nhỏ tích điện tiện lợi, lắp vào đèn pin để soi sáng lối đi đêm nương rẫy.",
+        question: "Vật nhỏ hình trụ chứa điện lắp vào đèn cầm tay để soi sáng đường đi nương đêm tối. Là cục gì?",
+        pacoWord: "Đèn pin",
+        ttsVi: "Pờ, in, pin!",
+        ttsPaco: "Tiếng Pa Cô là: Đèn pin!",
+        bonus: 10
+      },
+      {
+        id: 10,
+        x: 91.5, y: 67.5,
+        type: 'bonus',
+        name: "Làng Dệt Dèng",
+        landmark: "Di sản dệt Dèng A Lưới",
+        targetWord: "DỆT",
+        onset: "d", rime: "êt", tone: "•",
+        spelling: "Dờ - êt - dêt - nặng - DỆT",
+        vietMeaning: "Nghề thủ công truyền thống đan cài từng sợi chỉ màu và hạt cườm thành tấm thổ cẩm Zèng.",
+        question: "Bàn tay khéo léo của người phụ nữ Pa Cô đưa thoi luồn hạt cườm tạo nên tấm thổ cẩm. Gọi là làm gì?",
+        pacoWord: "Tút Zèng",
+        ttsVi: "Dờ, êt, dêt, nặng, DỆT!",
+        ttsPaco: "Tiếng Pa Cô là: Tút Zèng!",
+        bonus: 10
+      },
+      {
+        id: 11,
+        x: 82.0, y: 61.0,
+        type: 'word',
+        name: "Nhà Trưng Bày",
+        landmark: "Không gian sắc màu thổ cẩm",
+        targetWord: "KHĂN",
+        onset: "kh", rime: "ăn", tone: "-",
+        spelling: "Khờ - ăn - khăn",
+        vietMeaning: "Tấm vải Dèng thổ cẩm xinh xắn quàng cổ giữ ấm mùa đông và tôn nét duyên vùng cao.",
+        question: "Tấm vải Dèng thổ cẩm xinh xắn các cô gái Pa Cô thường quàng lên cổ giữ ấm mùa đông. Là cái gì?",
+        pacoWord: "Ka-răm",
+        ttsVi: "Khờ, ăn, khăn!",
+        ttsPaco: "Tiếng Pa Cô là: Ka răm!",
+        bonus: 10
+      },
+      {
+        id: 12,
+        x: 74.0, y: 47.0,
+        type: 'word',
+        name: "Cầu Treo",
+        landmark: "Cầu treo bản làng",
+        targetWord: "VỊT",
+        onset: "v", rime: "it", tone: "•",
+        spelling: "Vờ - it - vit - nặng - VỊT",
+        vietMeaning: "Loài thủy cầm chân có màng, mỏ dẹp, bơi lội tung tăng trên dòng suối trong lành.",
+        question: "Con gì chân có màng, mỏ dẹp, bơi lội dưới suối kêu 'cạp cạp'?",
+        pacoWord: "A-đà",
+        ttsVi: "Vờ, it, vit, nặng, VỊT!",
+        ttsPaco: "Tiếng Pa Cô là: A đà!",
+        bonus: 10
+      },
+      {
+        id: 13,
+        x: 83.0, y: 26.0,
+        type: 'water',
+        name: "Suối Khoáng",
+        landmark: "Suối nguồn ấm áp A Roàng",
+        targetWord: "SEN",
+        onset: "s", rime: "en", tone: "-",
+        spelling: "Sờ - en - sen",
+        vietMeaning: "Loài hoa thơm ngát vươn lên từ đầm nước, tượng trưng cho nét đẹp thanh khiết.",
+        question: "Loài hoa thơm ngát vươn lên từ bùn lầy, cánh hồng nhị vàng thanh khiết. Là hoa gì?",
+        pacoWord: "Bông hoa sen",
+        ttsVi: "Sờ, en, sen!",
+        ttsPaco: "Tiếng Pa Cô là: Bông hoa sen!",
+        bonus: 10
+      },
+      {
+        id: 14,
+        x: 68.0, y: 35.0,
+        type: 'word',
+        name: "Lối Mòn Rừng",
+        landmark: "Đường rừng nguyên sinh",
+        targetWord: "SƠN",
+        onset: "s", rime: "ơn", tone: "-",
+        spelling: "Sờ - ơn - sơn",
+        vietMeaning: "Chất màu dạng lỏng dùng quét trang trí cho ngôi nhà và đồ dùng thêm tươi tắn, bền đẹp.",
+        question: "Chất màu dạng nước dùng quét lên cửa gỗ hoặc tường để trang trí cho ngôi nhà thêm đẹp. Gọi là gì?",
+        pacoWord: "A-xem",
+        ttsVi: "Sờ, ơn, sơn!",
+        ttsPaco: "Tiếng Pa Cô là: A xem!",
+        bonus: 10
+      },
+      {
+        id: 15,
+        x: 54.0, y: 33.0,
+        type: 'word',
+        name: "Chân Thác",
+        landmark: "Vườn cây trái chân thác",
+        targetWord: "CAM",
+        onset: "c", rime: "am", tone: "-",
+        spelling: "Cờ - am - cam",
+        vietMeaning: "Loại quả tròn mọng nước, múi vàng óng ngọt thanh, chứa nhiều vitamin bồi bổ cơ thể.",
+        question: "Quả hình tròn, múi mọng nước, vị ngọt thanh mát giàu vitamin. Đố bạn là quả gì?",
+        pacoWord: "Plây cam",
+        ttsVi: "Cờ, am, cam!",
+        ttsPaco: "Tiếng Pa Cô là: Plây cam!",
+        bonus: 10
+      },
+      {
+        id: 16,
+        x: 51.5, y: 18.0,
+        type: 'water',
+        name: "Thác A Nôr",
+        landmark: "Thác ba tầng bọt tung trắng xóa",
+        targetWord: "CÁT",
+        onset: "c", rime: "at", tone: "/",
+        spelling: "Cờ - at - cat - sắc - CÁT",
+        vietMeaning: "Những hạt khoáng chất nhỏ mịn màu vàng trải dài êm ái bên bờ suối mát.",
+        question: "Hạt khoáng chất mịn màng màu vàng óng trải dài ven bờ suối trong vắt. Gọi là gì?",
+        pacoWord: "Khát đác",
+        ttsVi: "Cờ, at, cat, sắc, CÁT!",
+        ttsPaco: "Tiếng Pa Cô là: Khát đác!",
+        bonus: 10
+      },
+      {
+        id: 17,
+        x: 43.5, y: 21.0,
+        type: 'word',
+        name: "Cầu Mây",
+        landmark: "Cầu mây vượt ghềnh đá",
+        targetWord: "MẬT",
+        onset: "m", rime: "ât", tone: "•",
+        spelling: "Mờ - ât - mât - nặng - MẬT",
+        vietMeaning: "Chất ngọt sánh óng ánh do đàn ong rừng chắt chiu từ muôn hoa Trường Sơn.",
+        question: "Chất lỏng sánh vàng óng ánh, vị ngọt đậm đà do đàn ong rừng chắt chiu từ hoa rừng Trường Sơn. Là gì?",
+        pacoWord: "Đác xút",
+        ttsVi: "Mờ, ât, mât, nặng, MẬT!",
+        ttsPaco: "Tiếng Pa Cô là: Đác xút!",
+        bonus: 10
+      },
+      {
+        id: 18,
+        x: 29.0, y: 22.0,
+        type: 'word',
+        name: "Tượng Đài",
+        landmark: "Tượng đài chiến thắng A Lưới",
+        targetWord: "NÓN",
+        onset: "n", rime: "on", tone: "/",
+        spelling: "Nờ - on - non - sắc - NÓN",
+        vietMeaning: "Vật đội đầu che mưa nắng đan từ lá cọ khéo léo, thân thương cùng mẹ lên nương.",
+        question: "Vật đan bằng lá cọ hình chóp nhọn, mẹ hay đội trên đầu che mưa che nắng khi lên nương. Là cái gì?",
+        pacoWord: "A-đô",
+        ttsVi: "Nờ, on, non, sắc, NÓN!",
+        ttsPaco: "Tiếng Pa Cô là: A đô!",
+        bonus: 10
+      },
+      {
+        id: 19,
+        x: 16.0, y: 13.0,
+        type: 'word',
+        name: "Đồi A Bia",
+        landmark: "Di tích lịch sử Đồi A Bia",
+        targetWord: "LÊN",
+        onset: "l", rime: "ên", tone: "-",
+        spelling: "Lờ - ên - lên",
+        vietMeaning: "Hành động bước từng bước vượt qua con dốc, tiến về phía đỉnh núi cao.",
+        question: "Hành động bước từng bước vượt qua các bậc dốc để chinh phục đỉnh núi cao. Trái nghĩa với 'xuống' là gì?",
+        pacoWord: "Chô",
+        ttsVi: "Lờ, ên, lên!",
+        ttsPaco: "Tiếng Pa Cô là: Chô!",
+        bonus: 10
+      },
+      {
+        id: 20,
+        x: 55.0, y: 52.0,
+        type: 'finish',
+        name: "Nhà Rông Lớn",
+        landmark: "Mái Nhà Rông Trung Tâm (ĐÍCH ĐẾN)",
+        targetWord: "SẠP",
+        onset: "s", rime: "ap", tone: "•",
+        spelling: "Sờ - ap - sap - nặng - SẠP",
+        vietMeaning: "Điệu nhảy dân gian rộn rã gõ nhịp tre chan chát trong ngày hội lớn mừng bản làng no ấm.",
+        question: "Điệu nhảy dân gian vượt qua những thanh tre gõ nhịp chan chát trong ngày hội vui của bản làng. Đố bạn gọi là gì?",
+        pacoWord: "Múa sạp",
+        ttsVi: "Sờ, ap, sap, nặng, SẠP!",
+        ttsPaco: "Tiếng Pa Cô là: Múa sạp!",
+        bonus: 50
+      }
+    ];
+
+    /* ==========================================================================
+       2. MÔ HÌNH TRẠNG THÁI TRÒ CHƠI (GAME STATE & FINITE STATE MACHINE)
+       Quy trình chuẩn: READY -> ROLLING -> MOVING -> CHALLENGE -> CHECKING -> REWARD -> NEXT_TURN
+       ========================================================================== */
+    const GAME_STATES = {
+      READY: 'READY',
+      ROLLING: 'ROLLING',
+      MOVING: 'MOVING',
+      CHALLENGE: 'CHALLENGE',
+      CHECKING: 'CHECKING',
+      REWARD: 'REWARD',
+      NEXT_TURN: 'NEXT_TURN',
+      PAUSED: 'PAUSED',
+      GAME_OVER: 'GAME_OVER'
+    };
+
+    let stations = [];
+    let gameState = {
+      phase: GAME_STATES.READY,
+      currentTeam: 1, // 1: A Keng (Đỏ), 2: A Mây (Xanh)
+      teams: {
+        1: { id: 1, name: "Đội A Keng", color: "#e11d48", position: 0, score: 0, finished: false },
+        2: { id: 2, name: "Đội A Mây", color: "#0284c7", position: 0, score: 0, finished: false }
+      },
+      lastRoll: 6,
+      historyStack: [], // Lưu snapshot để Undo
+      soundEnabled: true,
+      confettiEnabled: true,
+      currentStation: null,
+      rewardCollectedInTurn: false
+    };
+
+        /* ==============================================================
+       HỆ THỐNG PHÁT ÂM TTS ĐÁNH VẦN TIẾNG VIỆT & TIẾNG PA CÔ
+       ============================================================== */
+        /* ==========================================================================
+       HỆ THỐNG 2 GIỌNG ĐỌC AI TIẾNG VIỆT & TIẾNG PA CÔ CHUẨN
+       ========================================================================== */
+    class DualAIVoiceEngine {
+      constructor() {
+        this.voices = [];
+        this.currentAudio = null;
+        this.initVoices();
+      }
+
+      initVoices() {
+        if ('speechSynthesis' in window) {
+          this.voices = window.speechSynthesis.getVoices();
+          window.speechSynthesis.onvoiceschanged = () => {
+            this.voices = window.speechSynthesis.getVoices();
+          };
+        }
+      }
+
+      stop() {
+        if (this.currentAudio) {
+          try {
+            this.currentAudio.pause();
+            this.currentAudio.currentTime = 0;
+          } catch(e) {}
+          this.currentAudio = null;
+        }
+        if ('speechSynthesis' in window) {
+          try { window.speechSynthesis.cancel(); } catch(e) {}
+        }
+      }
+
+      playStudioAudio(stationId, type = 'female', onEnd = null) {
+        this.stop();
+        // File audio neural studio đã tạo sẵn trong assets/audio/
+        // type: 'female' (Hoài My), 'male' (Nam Minh), 'paco' (Tiếng Pa Cô)
+        const audioPath = `assets/audio/station_${stationId}_${type}.mp3`;
+        const audio = new Audio(audioPath);
+        this.currentAudio = audio;
+
+        audio.onended = () => {
+          this.currentAudio = null;
+          if (onEnd) onEnd();
+        };
+
+        audio.onerror = () => {
+          console.warn('Không tải được audio local ' + audioPath + ', chuyển sang chế độ tự động tạo.');
+          if (gameState.currentStation) {
+            const st = gameState.currentStation;
+            const text = (type === 'paco') ? (st.ttsPaco || ("Tiếng Pa Cô là: " + st.pacoWord)) :
+                         `${st.spelling || st.targetWord}. Nghĩa là: ${st.vietMeaning || ""}. Tiếng Pa Cô là: ${st.pacoWord || ""}.`;
+            this.speakFallback(text, (type === 'female' ? 'female' : 'male'), onEnd);
+          }
+        };
+
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(err => {
+            console.warn('Audio play bị chặn, chạy fallback:', err);
+          });
+        }
+      }
+
+      speakFallback(text, gender = 'female', onEnd = null) {
+        if (!text) return;
+        this.stop();
+
+        try {
+          const cleanText = text.replace(/[*_#]/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 190);
+          const ttsUrl = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=vi&client=tw-ob&q=' + encodeURIComponent(cleanText);
+          const audio = new Audio();
+          audio.src = ttsUrl;
+          audio.playbackRate = (gender === 'male') ? 0.86 : 1.0;
+          audio.onended = () => {
+            this.currentAudio = null;
+            if (onEnd) onEnd();
+          };
+          audio.onerror = () => {
+            this.fallbackSpeechSynthesis(text, gender, onEnd);
+          };
+          this.currentAudio = audio;
+          const playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => this.fallbackSpeechSynthesis(text, gender, onEnd));
+          }
+        } catch(err) {
+          this.fallbackSpeechSynthesis(text, gender, onEnd);
+        }
+      }
+
+      fallbackSpeechSynthesis(text, gender, onEnd) {
+        if (!('speechSynthesis' in window)) return;
+        try {
+          const utter = new SpeechSynthesisUtterance(text);
+          utter.lang = 'vi-VN';
+          const viVoices = this.voices.filter(v => v.lang && (v.lang.startsWith('vi') || v.lang.includes('VIE')));
+          if (gender === 'male') {
+            utter.pitch = 0.82;
+            utter.rate = 0.85;
+            const maleVoice = viVoices.find(v => /male|nam|minh|khoi|dung/i.test(v.name));
+            if (maleVoice) utter.voice = maleVoice;
+            else if (viVoices.length > 0) utter.voice = viVoices[0];
+          } else {
+            utter.pitch = 1.15;
+            utter.rate = 0.92;
+            const femaleVoice = viVoices.find(v => /female|hoaimy|linh|mai|chi|nu|loan|an/i.test(v.name));
+            if (femaleVoice) utter.voice = femaleVoice;
+            else if (viVoices.length > 0) utter.voice = viVoices[0];
+          }
+          if (onEnd) utter.onend = onEnd;
+          window.speechSynthesis.speak(utter);
+        } catch(e) {}
+      }
+    }
+
+    const aiVoiceEngine = new DualAIVoiceEngine();
+
+    // Phát âm theo lượt nhân vật đang chơi: A-Keng -> Nam, A-Mây -> Nữ
+    function speakCurrentTeamWord() {
+      if (!gameState.currentStation) return;
+      const st = gameState.currentStation;
+      const activeTeam = gameState.teams[gameState.currentTeam];
+      const isMale = (activeTeam.id === 1); // 1: A-Keng (Nam), 2: A-Mây (Nữ)
+      const voiceType = isMale ? 'male' : 'female';
+      const actorName = isMale ? 'A-Keng (Giọng Nam)' : 'A-Mây (Giọng Nữ)';
+
+      aiVoiceEngine.playStudioAudio(st.id, voiceType);
+      showToast(`${actorName} đang đọc: ${st.targetWord}`);
+    }
+
+    function speakPacoCurrent() {
+      if (!gameState.currentStation) return;
+      const st = gameState.currentStation;
+      aiVoiceEngine.playStudioAudio(st.id, 'paco');
+      showToast("Tiếng Pa Cô: " + st.pacoWord);
+    }
+
+    /* ==========================================================================
+       3. HỆ THỐNG ÂM THANH ĐỘC LẬP TỔNG HỢP QUA WEB AUDIO API
+       (Hoạt động 100% offline, không lo mất mạng hay lỗi file 404 trên lớp học)
+       ========================================================================== */
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+        const SoundEffects = {
+      // Tiếng thoi dệt Dèng lướt qua sợi chỉ
+      loomShuttle: function() {
+        if (!gameState.soundEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const notes = [440, 520, 660, 580];
+        notes.forEach((freq, i) => {
+          setTimeout(() => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            gain.gain.setValueAtTime(0.18, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.12);
+          }, i * 140);
+        });
+      },
+
+      // Tiếng tung xúc xắc
+      rollDice: function() {
+        if (!gameState.soundEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(240 + Math.random() * 280, ctx.currentTime);
+            gain.gain.setValueAtTime(0.15, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.08);
+          }, i * 80);
+        }
+      },
+
+      // Tiếng bước chân nhảy từng ô
+      stepJump: function() {
+        if (!gameState.soundEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(340, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(580, ctx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.12);
+      },
+
+      // Tiếng mở cửa sổ thử thách
+      openModal: function() {
+        if (!gameState.soundEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, ctx.currentTime);
+        osc.frequency.linearRampToValueAtTime(880, ctx.currentTime + 0.18);
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.2);
+      },
+
+      // Tiếng chuông vàng vinh danh khi ghép đúng từ
+      correctChime: function() {
+        if (!gameState.soundEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          setTimeout(() => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            gain.gain.setValueAtTime(0.25, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.45);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.45);
+          }, idx * 110);
+        });
+      },
+
+      // Tiếng khích lệ khi học sinh chưa đúng: "Thử lại nào!"
+      retryTone: function() {
+        if (!gameState.soundEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(320, ctx.currentTime);
+        osc.frequency.linearRampToValueAtTime(240, ctx.currentTime + 0.22);
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.25);
+      },
+
+      // Tiếng kèn chiến thắng kết thúc trò chơi
+      victoryFanfare: function() {
+        if (!gameState.soundEnabled) return;
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const song = [
+          { f: 523.25, d: 0.15 },
+          { f: 523.25, d: 0.15 },
+          { f: 523.25, d: 0.15 },
+          { f: 659.25, d: 0.35 },
+          { f: 783.99, d: 0.25 },
+          { f: 1046.50, d: 0.7 }
+        ];
+        let cur = 0;
+        song.forEach(note => {
+          setTimeout(() => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(note.f, ctx.currentTime);
+            gain.gain.setValueAtTime(0.3, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + note.d);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + note.d);
+          }, cur * 1000);
+          cur += note.d + 0.05;
+        });
+      }
+    };
+
+    /* ==========================================================================
+       4. HIỆU ỨNG PHÁO HOA & HOA TUYẾT THỔ CẨM (CANVAS CONFETTI)
+       ========================================================================== */
+    const confettiCanvas = document.getElementById('confetti-canvas');
+    const confettiCtx = confettiCanvas.getContext('2d');
+    let confettiParticles = [];
+    let confettiAnimId = null;
+
+    function resizeConfetti() {
+      confettiCanvas.width = confettiCanvas.parentElement.clientWidth;
+      confettiCanvas.height = confettiCanvas.parentElement.clientHeight;
+    }
+    window.addEventListener('resize', resizeConfetti);
+
+    function launchConfetti(count = 70) {
+      if (!gameState.confettiEnabled) return;
+      resizeConfetti();
+      const colors = ['#c92a2a', '#f59f00', '#2b8a3e', '#1864ab', '#ffffff', '#e03131'];
+      for (let i = 0; i < count; i++) {
+        confettiParticles.push({
+          x: confettiCanvas.width / 2 + (Math.random() - 0.5) * 300,
+          y: confettiCanvas.height / 2 + (Math.random() - 0.5) * 100,
+          vx: (Math.random() - 0.5) * 14,
+          vy: (Math.random() - 0.75) * 16,
+          size: Math.random() * 8 + 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          vRot: (Math.random() - 0.5) * 10,
+          life: 1.0,
+          decay: Math.random() * 0.015 + 0.01
+        });
+      }
+      if (!confettiAnimId) {
+        animateConfetti();
+      }
+    }
+
+    function animateConfetti() {
+      confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      for (let i = confettiParticles.length - 1; i >= 0; i--) {
+        const p = confettiParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.35; // gravity
+        p.rotation += p.vRot;
+        p.life -= p.decay;
+
+        if (p.life <= 0) {
+          confettiParticles.splice(i, 1);
+          continue;
+        }
+
+        confettiCtx.save();
+        confettiCtx.translate(p.x, p.y);
+        confettiCtx.rotate(p.rotation * Math.PI / 180);
+        confettiCtx.fillStyle = p.color;
+        confettiCtx.globalAlpha = p.life;
+        confettiCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 1.4);
+        confettiCtx.restore();
+      }
+
+      if (confettiParticles.length > 0) {
+        confettiAnimId = requestAnimationFrame(animateConfetti);
+      } else {
+        confettiAnimId = null;
+      }
+    }
+
+    /* ==========================================================================
+       5. KHỞI TẠO BẢN ĐỒ 24 Ô & VẼ ĐƯỜNG MÒN SVG UỐN LƯỢN
+       ========================================================================== */
+        function loadStationsData() {
+      const saved = localStorage.getItem('SAC_ZENG_STATIONS_DATA_V4');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          stations = DEFAULT_STATIONS.map(def => {
+            const found = parsed.find(p => p.id === def.id);
+            if (found) {
+              return { ...found, x: def.x, y: def.y, pacoWord: def.pacoWord, ttsVi: def.ttsVi, ttsPaco: def.ttsPaco };
+            }
+            return def;
+          });
+        } catch(e) {
+          stations = JSON.parse(JSON.stringify(DEFAULT_STATIONS));
+        }
+      } else {
+        stations = JSON.parse(JSON.stringify(DEFAULT_STATIONS));
+      }
+    }
+
+        function renderStationsOnMap() {
+      const container = document.getElementById('station-pins-container');
+      container.innerHTML = '';
+
+      stations.forEach(st => {
+        const pin = document.createElement('div');
+        pin.className = `map-pin type-${st.type} ${st.id === 0 ? 'station-start' : ''} ${st.id === 20 ? 'station-finish' : ''}`;
+        pin.id = `map-pin-${st.id}`;
+        pin.style.left = `${st.x}%`;
+        pin.style.top = `${st.y}%`;
+
+        // Biểu tượng loại ô
+        let typeIcon = st.id;
+        let typeBadge = 'Trạm Chữ';
+        if (st.type === 'start') {
+          typeIcon = '🏁';
+          typeBadge = 'Khởi hành';
+        } else if (st.type === 'bonus') {
+          typeIcon = '⭐';
+          typeBadge = 'Mùa Vàng';
+        } else if (st.type === 'water') {
+          typeIcon = '💧';
+          typeBadge = 'Suối Mát';
+        } else if (st.type === 'finish') {
+          typeIcon = '🏆';
+          typeBadge = 'ĐÍCH ĐẾN';
+        }
+
+        pin.innerHTML = `
+          <div class="pin-circle" title="${st.landmark}">
+            ${typeIcon}
+          </div>
+          <div class="pin-label-card">
+            <div class="pin-label-name">${st.name}</div>
+            <div class="pin-label-type">${typeBadge}</div>
+          </div>
+        `;
+
+        pin.addEventListener('click', () => {
+          onPinClicked(st);
+        });
+
+        container.appendChild(pin);
+      });
+
+      renderTrailSvg();
+      updatePlayerTokensPosition();
+    }
+
+    // Vẽ đường mòn nối tuần tự 24 trạm
+        // Vẽ đường mòn uốn lượn lũy tiến: Chỉ hiển thị đến ô xa nhất đã đi tới!
+    function renderTrailSvg() {
+      const maxReached = Math.max(gameState.teams[1].position, gameState.teams[2].position);
+      
+      // Nếu 2 đội còn ở Trạm 0 -> Không vẽ đường mòn, giữ bản đồ sạch đẹp
+      if (maxReached < 1) {
+        document.getElementById('trail-path-glow').setAttribute('d', '');
+        document.getElementById('trail-path-main').setAttribute('d', '');
+        updatePinProgressStyles(0);
+        return;
+      }
+
+      // Vẽ đường mòn từ Trạm 0 đến trạm xa nhất đã đi tới
+      let d = `M ${stations[0].x * 10} ${stations[0].y * 5.62}`;
+      for (let i = 1; i <= maxReached && i < stations.length; i++) {
+        const prev = stations[i - 1];
+        const curr = stations[i];
+        const cx = (prev.x + curr.x) / 2 * 10;
+        const cy = (prev.y + curr.y) / 2 * 5.62;
+        d += ` Q ${cx} ${cy}, ${curr.x * 10} ${curr.y * 5.62}`;
+      }
+
+      document.getElementById('trail-path-glow').setAttribute('d', d);
+      document.getElementById('trail-path-main').setAttribute('d', d);
+      updatePinProgressStyles(maxReached);
+    }
+
+    // Làm mờ tinh tế các ô chưa đi tới, làm nổi bật các ô đã khám phá
+    function updatePinProgressStyles(maxReached) {
+      stations.forEach(st => {
+        const pin = document.getElementById('map-pin-' + st.id);
+        if (!pin) return;
+        if (st.id === 0 || st.id <= maxReached) {
+          pin.classList.remove('pin-undiscovered');
+          pin.classList.add('pin-discovered');
+        } else {
+          pin.classList.add('pin-undiscovered');
+          pin.classList.remove('pin-discovered');
+        }
+      });
+    }
+
+    // Cập nhật vị trí tọa độ của 2 quân cờ nhân vật
+        function updatePlayerTokensPosition() {
+      const p1Pos = gameState.teams[1].position;
+      const p2Pos = gameState.teams[2].position;
+
+      const st1 = stations.find(s => s.id === p1Pos) || stations[0];
+      const st2 = stations.find(s => s.id === p2Pos) || stations[0];
+
+      const token1 = document.getElementById('token-team-1');
+      const token2 = document.getElementById('token-team-2');
+
+      if (p1Pos === p2Pos) {
+        token1.style.left = `calc(${st1.x}% - 16px)`;
+        token1.style.top = `calc(${st1.y}% - 24px)`;
+
+        token2.style.left = `calc(${st2.x}% + 16px)`;
+        token2.style.top = `calc(${st2.y}% - 24px)`;
+      } else {
+        token1.style.left = `${st1.x}%`;
+        token1.style.top = `calc(${st1.y}% - 24px)`;
+
+        token2.style.left = `${st2.x}%`;
+        token2.style.top = `calc(${st2.y}% - 24px)`;
+      }
+
+      document.getElementById('status-team-1').innerText = p1Pos === 0 ? 'Tại Cổng Khởi Hành' : `Tại Ô ${p1Pos}: ${st1.name}`;
+      document.getElementById('status-team-2').innerText = p2Pos === 0 ? 'Tại Cổng Khởi Hành' : `Tại Ô ${p2Pos}: ${st2.name}`;
+    }
+
+    /* ==========================================================================
+       6. ĐIỀU KHIỂN LƯỢT CHƠI, XÚC XẮC & DI CHUYỂN TUẦN TỰ
+       ========================================================================== */
+    function saveHistorySnapshot() {
+      gameState.historyStack.push(JSON.stringify({
+        phase: gameState.phase,
+        currentTeam: gameState.currentTeam,
+        teams: gameState.teams,
+        lastRoll: gameState.lastRoll
+      }));
+      // Giới hạn 15 bước gần nhất
+      if (gameState.historyStack.length > 15) {
+        gameState.historyStack.shift();
+      }
+    }
+
+    function undoLastTurn() {
+      if (gameState.historyStack.length === 0) {
+        showToast("⚠️ Chưa có thao tác nào để hoàn tác!");
+        return;
+      }
+      const snapshot = JSON.parse(gameState.historyStack.pop());
+      gameState.phase = snapshot.phase;
+      gameState.currentTeam = snapshot.currentTeam;
+      gameState.teams = snapshot.teams;
+      gameState.lastRoll = snapshot.lastRoll;
+
+      updateHUD();
+      updatePlayerTokensPosition();
+      closeChallengeModal();
+      showToast("↩️ Đã hoàn tác về trạng thái trước!");
+    }
+
+    // Cập nhật giao diện thanh điều khiển & bảng điểm
+    function updateHUD() {
+      const team1 = gameState.teams[1];
+      const team2 = gameState.teams[2];
+
+      document.getElementById('score-team-1').innerText = team1.score;
+      document.getElementById('score-team-2').innerText = team2.score;
+
+      const hudTeam1 = document.getElementById('hud-team-1');
+      const hudTeam2 = document.getElementById('hud-team-2');
+      const avatarElem = document.getElementById('dock-team-avatar');
+      const teamTitleElem = document.getElementById('dock-team-title');
+
+      if (gameState.currentTeam === 1) {
+        hudTeam1.classList.add('active-turn');
+        hudTeam2.classList.remove('active-turn');
+        teamTitleElem.innerText = "Lượt: Đội A Keng";
+        teamTitleElem.style.color = "#e11d48";
+        
+        // Avatar dock giữ ảnh chân dung akeng_idle
+        const dockImg = document.getElementById('dock-avatar-img');
+        if (dockImg) dockImg.src = "assets/akeng_idle_cropped.png";
+        if (avatarElem) {
+          avatarElem.style.borderColor = "#e11d48";
+          avatarElem.style.boxShadow = "0 0 16px rgba(225, 29, 72, 0.6)";
+        }
+
+        // Mascot góc trái bản đồ: Hành động A-Keng thổi khèn (akeng_play.png)
+        const mascotImg = document.getElementById('map-mascot-img');
+        const mascotTitle = document.getElementById('map-mascot-title');
+        const mascotDesc = document.getElementById('map-mascot-desc');
+        if (mascotImg) mascotImg.src = "assets/akeng_play_cropped.png";
+        if (mascotTitle) {
+          mascotTitle.innerText = "ĐỘI A KENG";
+          mascotTitle.style.color = "#e11d48";
+        }
+        if (mascotDesc) {
+          mascotDesc.innerText = "A-Keng thổi khèn cổ vũ bà con dệt chữ!";
+        }
+      } else {
+        hudTeam2.classList.add('active-turn');
+        hudTeam1.classList.remove('active-turn');
+        teamTitleElem.innerText = "Lượt: Đội A Mây";
+        teamTitleElem.style.color = "#0284c7";
+
+        // Avatar dock giữ ảnh chân dung amay_idle
+        const dockImg = document.getElementById('dock-avatar-img');
+        if (dockImg) dockImg.src = "assets/amay_idle_cropped.png";
+        if (avatarElem) {
+          avatarElem.style.borderColor = "#0284c7";
+          avatarElem.style.boxShadow = "0 0 16px rgba(2, 132, 199, 0.6)";
+        }
+
+        // Mascot góc trái bản đồ: Hành động A-Mây múa ăn mừng (amay_celebrate.png)
+        const mascotImg = document.getElementById('map-mascot-img');
+        const mascotTitle = document.getElementById('map-mascot-title');
+        const mascotDesc = document.getElementById('map-mascot-desc');
+        if (mascotImg) mascotImg.src = "assets/amay_celebrate_cropped.png";
+        if (mascotTitle) {
+          mascotTitle.innerText = "ĐỘI A MÂY";
+          mascotTitle.style.color = "#0284c7";
+        }
+        if (mascotDesc) {
+          mascotDesc.innerText = "A-Mây gùi chữ vượt đèo lội suối nè!";
+        }
+      }
+
+      document.getElementById('dock-phase-badge').innerText = gameState.phase;
+
+      const rollBtn = document.getElementById('btn-roll-dice');
+      if (gameState.phase === GAME_STATES.READY) {
+        rollBtn.disabled = false;
+        rollBtn.classList.add('ready-pulse');
+        document.getElementById('dock-instruct-tip').innerText = 'Nhấn "Tung Xúc Xắc" để di chuyển!';
+      } else if (gameState.phase === GAME_STATES.ROLLING) {
+        rollBtn.disabled = true;
+        rollBtn.classList.remove('ready-pulse');
+        document.getElementById('dock-instruct-tip').innerText = 'Đang lắc xúc xắc...';
+      } else if (gameState.phase === GAME_STATES.MOVING) {
+        rollBtn.disabled = true;
+        rollBtn.classList.remove('ready-pulse');
+        document.getElementById('dock-instruct-tip').innerText = 'Nhân vật đang bước đi...';
+      } else if (gameState.phase === GAME_STATES.CHALLENGE) {
+        rollBtn.disabled = true;
+        rollBtn.classList.remove('ready-pulse');
+        document.getElementById('dock-instruct-tip').innerText = 'Đang thực hiện thử thách trên Khung Dệt Chữ!';
+      }
+    }
+
+    // Xử lý khi nhấn nút Tung Xúc Xắc
+        // Xử lý khi nhấn nút Tung Xúc Xắc: Mở hoạt cảnh dệt Dèng ở giữa màn hình
+        // Xử lý Tung Xúc Xắc: Hoạt cảnh dệt Dèng 5 giây với số chạy hấp dẫn
+    function handleRollDice(forcedStep = null) {
+      if (gameState.phase !== GAME_STATES.READY) {
+        return;
+      }
+
+      saveHistorySnapshot();
+      gameState.phase = GAME_STATES.ROLLING;
+      updateHUD();
+
+      const activeTeam = gameState.teams[gameState.currentTeam];
+      const rollValue = forcedStep ? forcedStep : (Math.floor(Math.random() * 6) + 1);
+
+      const overlay = document.getElementById('loom-dice-overlay');
+      const titleElem = document.getElementById('loom-dice-title');
+      const numWrap = document.getElementById('loom-giant-number');
+      const resultBadge = document.getElementById('loom-result-badge');
+      const resultBox = document.getElementById('loom-dice-result-box');
+
+      titleElem.innerText = `KHUNG DỆT ĐANG TUNG THOI (${activeTeam.name.toUpperCase()})...`;
+      resultBox.classList.add('revealed');
+      resultBadge.innerText = "Đang dệt số bước...";
+      overlay.classList.add('active');
+
+      // Tiếng thoi dệt Dèng lướt qua lại
+      SoundEffects.loomShuttle();
+      const shuttleSoundTimer = setInterval(() => {
+        SoundEffects.loomShuttle();
+      }, 1200);
+
+      // Hiệu ứng số chạy tít liên tục (như guồng quay) tạo kịch tính trong ~4 giây
+      const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+      const numberRollTimer = setInterval(() => {
+        const tempNum = Math.floor(Math.random() * 6) + 1;
+        numWrap.innerText = tempNum;
+        document.getElementById('dice-face-display').innerText = diceFaces[tempNum - 1];
+      }, 75);
+
+      // Sau 4 giây: Khóa con số xúc xắc may mắn
+      setTimeout(() => {
+        clearInterval(numberRollTimer);
+        clearInterval(shuttleSoundTimer);
+
+        numWrap.innerText = rollValue;
+        document.getElementById('dice-face-display').innerText = diceFaces[rollValue - 1];
+        resultBadge.innerText = `${activeTeam.name.toUpperCase()} TIẾN ${rollValue} BƯỚC!`;
+        gameState.lastRoll = rollValue;
+
+        // Âm thanh chốt số vàng may mắn & pháo hoa
+        SoundEffects.correctChime();
+        launchConfetti(50);
+
+        // Hiệu ứng hào quang nảy số
+        numWrap.style.transform = 'scale(1.22)';
+        setTimeout(() => { numWrap.style.transform = 'scale(1.05)'; }, 350);
+
+        // Sau thêm 1.2 giây (tổng cộng ~5.2 giây): Đóng overlay và bắt đầu bước đi
+        setTimeout(() => {
+          overlay.classList.remove('active');
+          startMovingPhase(rollValue);
+        }, 1200);
+      }, 4000);
+    }
+
+    // Giai đoạn di chuyển tuần tự qua từng ô
+    function startMovingPhase(steps) {
+      gameState.phase = GAME_STATES.MOVING;
+      updateHUD();
+
+      const activeTeam = gameState.teams[gameState.currentTeam];
+      let stepsRemaining = steps;
+
+      const moveInterval = setInterval(() => {
+        if (stepsRemaining > 0 && activeTeam.position < 20) {
+          activeTeam.position++;
+          stepsRemaining--;
+          SoundEffects.stepJump();
+          updatePlayerTokensPosition();
+          renderTrailSvg(); // Cập nhật đường đi mở rộng đến ô vừa bước tới
+        } else {
+          clearInterval(moveInterval);
+          onMoveFinished();
+        }
+      }, 400);
+    }
+
+    // Khi nhân vật dừng tại ô đích của lượt
+    function onMoveFinished() {
+      const activeTeam = gameState.teams[gameState.currentTeam];
+      const landedStation = stations.find(s => s.id === activeTeam.position);
+      gameState.currentStation = landedStation;
+      gameState.rewardCollectedInTurn = false;
+
+      // Kiểm tra nếu đến ô 24 (Về Đích)
+      if (landedStation.id === 20) {
+        activeTeam.finished = true;
+        activeTeam.score += landedStation.bonus;
+        updateHUD();
+        SoundEffects.victoryFanfare();
+        launchConfetti(120);
+        showToast(`🏁 ${activeTeam.name} đã VỀ ĐÍCH tại Nhà Rông Văn Hóa (+${landedStation.bonus}⭐)!`);
+
+        // Mở popup thử thách tổng kết đích đến
+        setTimeout(() => {
+          openChallengeModal(landedStation);
+        }, 600);
+        return;
+      }
+
+      // Ô Thưởng May Mắn (Mùa Vàng) hoặc Suối Mát
+      if (landedStation.type === 'bonus' || landedStation.type === 'water') {
+        activeTeam.score += landedStation.bonus;
+        gameState.rewardCollectedInTurn = true;
+        updateHUD();
+        SoundEffects.correctChime();
+        launchConfetti(40);
+        showToast(`✨ ${activeTeam.name} đến ô ${landedStation.name} nhận thêm ${landedStation.bonus}⭐!`);
+      }
+
+      // Mở hộp thoại thử thách ghép chữ
+      setTimeout(() => {
+        openChallengeModal(landedStation);
+      }, 500);
+    }
+
+    /* ==========================================================================
+       7. CỬA SỔ THỬ THÁCH GHÉP CHỮ TRÊN KHUNG DỆT (CHALLENGE MODAL LOGIC)
+       ========================================================================== */
+            function openChallengeModal(station) {
+      gameState.phase = GAME_STATES.CHALLENGE;
+      updateHUD();
+
+      const activeTeam = gameState.teams[gameState.currentTeam];
+      document.getElementById('modal-station-num').innerText = station.id;
+      document.getElementById('modal-station-name').innerText = station.name;
+      document.getElementById('modal-station-type').innerText = 
+        station.type === 'finish' ? 'ĐÍCH ĐẾN - NHÀ RÔNG VĂN HÓA' :
+        station.type === 'bonus' ? 'MÙA VÀNG BỘI THU (+20⭐)' :
+        station.type === 'water' ? 'SUỐI MÁT TIẾP SỨC (+15⭐)' : 'TRẠM THỬ THÁCH GHÉP CHỮ';
+
+      document.getElementById('modal-team-indicator').innerHTML = `
+        <span>${activeTeam.id === 1 ? '👦' : '👧'}</span> ${activeTeam.name} đang thực hiện
+      `;
+      
+      const btnSpeakTeam = document.getElementById('btn-speak-team');
+      if (btnSpeakTeam) {
+        btnSpeakTeam.innerText = (activeTeam.id === 1) ? "A-Keng đọc" : "A-Mây đọc";
+        btnSpeakTeam.title = (activeTeam.id === 1) ? "Nghe giọng Nam A-Keng đọc" : "Nghe giọng Nữ A-Mây đọc";
+      }
+
+      document.getElementById('modal-question-text').innerText = station.question;
+      document.getElementById('modal-target-word').innerText = station.targetWord;
+      document.getElementById('modal-spelling-text').innerText = `(${station.spelling})`;
+      
+      const meaningElem = document.getElementById('modal-meaning-text');
+      if (meaningElem) {
+        meaningElem.innerText = station.vietMeaning || "";
+      }
+      
+      const pacoElem = document.getElementById('modal-paco-word');
+      if (pacoElem) {
+        pacoElem.innerText = station.pacoWord || station.targetWord;
+      }
+
+      const onsetElem = document.getElementById('slot-onset-display');
+      const rimeElem = document.getElementById('slot-rime-display');
+      const toneElem = document.getElementById('slot-tone-display');
+
+      onsetElem.innerText = '?';
+      onsetElem.classList.add('masked');
+
+      rimeElem.innerText = '?';
+      rimeElem.classList.add('masked');
+
+      toneElem.innerText = '?';
+      toneElem.classList.add('masked');
+
+      // Giữ hộp đáp án ẩn kín cho đến khi giáo viên bấm Hiện Đáp Án
+      document.getElementById('modal-answer-box').classList.remove('show');
+
+      SoundEffects.openModal();
+      document.getElementById('modal-challenge').classList.add('open');
+      // Không đọc trước khi học sinh chưa giải ô!
+    }
+
+    function closeChallengeModal() {
+      aiVoiceEngine.stop();
+      document.getElementById('modal-challenge').classList.remove('open');
+    }
+
+    // Giáo viên mở gợi ý: Tiết lộ âm đầu và vần
+    function handleShowHint() {
+      if (!gameState.currentStation) return;
+      const st = gameState.currentStation;
+
+      const onsetElem = document.getElementById('slot-onset-display');
+      const rimeElem = document.getElementById('slot-rime-display');
+
+      onsetElem.innerText = st.onset;
+      onsetElem.classList.remove('masked');
+
+      rimeElem.innerText = st.rime;
+      rimeElem.classList.remove('masked');
+
+      SoundEffects.openModal();
+      showToast("💡 Đã mở gợi ý Âm đầu và Vần cho học viên!");
+    }
+
+    // Giáo viên mở toàn bộ đáp án: HIỆN ĐÁP ÁN & ĐỌC ĐÁNH VẦN BẰNG GIỌNG AI
+    function handleShowAnswer() {
+      if (!gameState.currentStation) return;
+      const st = gameState.currentStation;
+
+      document.getElementById('slot-onset-display').innerText = st.onset;
+      document.getElementById('slot-onset-display').classList.remove('masked');
+
+      document.getElementById('slot-rime-display').innerText = st.rime;
+      document.getElementById('slot-rime-display').classList.remove('masked');
+
+      document.getElementById('slot-tone-display').innerText = st.tone;
+      document.getElementById('slot-tone-display').classList.remove('masked');
+
+      // Hiện khung đáp án, đánh vần và tiếng Pa Cô
+      document.getElementById('modal-answer-box').classList.add('show');
+      showToast("👁️ Đã hiển thị đáp án!");
+
+      // Tự động phát âm chuẩn studio theo đội đang chơi: A-Keng -> Nam, A-Mây -> Nữ
+      const activeTeam = gameState.teams[gameState.currentTeam];
+      const voiceType = (activeTeam.id === 1) ? 'male' : 'female';
+      aiVoiceEngine.playStudioAudio(st.id, voiceType);
+    }
+
+    // Giáo viên xác nhận: HỌC VIÊN GHÉP ĐÚNG TRÊN KHUNG DỆT (+Sao Zèng)
+    function handleVerdictCorrect() {
+      const activeTeam = gameState.teams[gameState.currentTeam];
+      
+      if (!gameState.rewardCollectedInTurn) {
+        const rewardPoints = 20;
+        activeTeam.score += rewardPoints;
+        gameState.rewardCollectedInTurn = true;
+        updateHUD();
+      }
+
+      SoundEffects.correctChime();
+      launchConfetti(80);
+      showToast(`🌟 RẤT TỐT! ${activeTeam.name} ghép đúng từ khóa (+20⭐)!`);
+
+      // Mở đáp án và phát âm đánh vần
+      handleShowAnswer();
+
+      setTimeout(() => {
+        closeChallengeModal();
+        checkGameCompletionOrNextTurn();
+      }, 1600);
+    }
+
+    // Giáo viên xác nhận: HỌC VIÊN CHƯA ĐÚNG -> CHO PHÉP THỬ LẠI
+        // Giáo viên xác nhận: CHƯA ĐÚNG -> OUT RA NGOÀI LUÔN VÀ ĐỔI LƯỢT
+    function handleVerdictRetry() {
+      SoundEffects.retryTone();
+      showToast("Chưa đúng! Đổi lượt sang đội tiếp theo.");
+      closeChallengeModal();
+      checkGameCompletionOrNextTurn();
+    }
+
+    // Bỏ qua thử thách hiện tại và chuyển lượt
+    function handleSkipChallenge() {
+      closeChallengeModal();
+      showToast("⏭️ Đã bỏ qua thử thách. Chuyển sang lượt tiếp theo!");
+      checkGameCompletionOrNextTurn();
+    }
+
+    // Kiểm tra kết thúc trò chơi hoặc chuyển lượt
+        // Kiểm tra kết thúc trò chơi hoặc chuyển lượt công bằng (Equal Turns)
+    function checkGameCompletionOrNextTurn() {
+      const team1 = gameState.teams[1];
+      const team2 = gameState.teams[2];
+
+      // Điều kiện kết thúc ván:
+      // 1. Cả 2 đội đều đã về đích (finished)
+      // 2. Hoặc Đội 1 đã về đích trước và Đội 2 vừa hoàn thành lượt đi công bằng cuối cùng của mình
+      const isGameOver = (team1.finished && team2.finished) || 
+                         (team1.finished && gameState.currentTeam === 2) ||
+                         (team2.finished && gameState.currentTeam === 2 && !team1.finished);
+
+      if (isGameOver) {
+        // Mở cửa sổ tổng kết và vinh danh chiến thắng dựa trên TỔNG ĐIỂM
+        openVictoryModal();
+        return;
+      }
+
+      // Nếu Đội 1 vừa cán đích -> Báo hiệu Đội 2 được đi nốt lượt cuối cùng
+      if (team1.finished && gameState.currentTeam === 1 && !team2.finished) {
+        showToast("🏁 Đội A Keng đã cán đích (+50⭐)! Đội A Mây được đi nốt lượt cuối cùng để so tài tổng điểm!");
+      }
+
+      // Chuyển lượt sang đội còn lại
+      gameState.currentTeam = gameState.currentTeam === 1 ? 2 : 1;
+      gameState.phase = GAME_STATES.READY;
+      updateHUD();
+      showToast(`Đến lượt ${gameState.teams[gameState.currentTeam].name}!`);
+    }
+
+    function openVictoryModal() {
+      gameState.phase = GAME_STATES.GAMEOVER;
+      updateHUD();
+
+      const team1 = gameState.teams[1];
+      const team2 = gameState.teams[2];
+
+      document.getElementById('victory-score-team-1').innerText = team1.score;
+      document.getElementById('victory-score-team-2').innerText = team2.score;
+
+      const headline = document.getElementById('victory-headline');
+      const subtext = document.getElementById('victory-subtext');
+
+      if (team1.score > team2.score) {
+        headline.innerText = "🏆 ĐỘI A KENG CHIẾN THẮNG!";
+        subtext.innerText = `Xuất sắc đạt ${team1.score} Sao Zèng (Hơn ${team1.score - team2.score} sao) - Vinh danh Vua Chữ Đại Ngàn!`;
+      } else if (team2.score > team1.score) {
+        headline.innerText = "🏆 ĐỘI A MÂY CHIẾN THẮNG!";
+        subtext.innerText = `Xuất sắc đạt ${team2.score} Sao Zèng (Hơn ${team2.score - team1.score} sao) - Vinh danh Vua Chữ Đại Ngàn!`;
+      } else {
+        headline.innerText = "🤝 HAI ĐỘI HÒA NHAU VANG DỘI!";
+        subtext.innerText = `Cả hai đội đều đạt ${team1.score} Sao Zèng - Bản làng no ấm, rạng rỡ tri thức!`;
+      }
+
+      SoundEffects.victoryFanfare();
+      launchConfetti(150);
+      document.getElementById('modal-victory').classList.add('open');
+    }
+
+    function resetGameSession() {
+      if (confirm("Thầy/Cô có chắc chắn muốn bắt đầu lại ván chơi mới từ vạch xuất phát?")) {
+        gameState.phase = GAME_STATES.READY;
+        gameState.currentTeam = 1;
+        gameState.teams[1].position = 0;
+        gameState.teams[1].score = 0;
+        gameState.teams[1].finished = false;
+
+        gameState.teams[2].position = 0;
+        gameState.teams[2].score = 0;
+        gameState.teams[2].finished = false;
+
+        gameState.historyStack = [];
+        closeChallengeModal();
+        document.getElementById('modal-victory').classList.remove('open');
+
+        updateHUD();
+        updatePlayerTokensPosition();
+        renderTrailSvg();
+        showToast("🔄 Đã bắt đầu ván chơi mới từ Cổng Khởi Hành!");
+      }
+    }
+
+    /* ==========================================================================
+       9. BỘ BIÊN TẬP CÂU HỎI 24 Ô (TEACHER EDITOR)
+       ========================================================================== */
+    function openEditorModal() {
+      const tbody = document.getElementById('editor-table-rows');
+      tbody.innerHTML = '';
+
+      stations.forEach(st => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-weight:900; text-align:center;">${st.id}</td>
+          <td><input type="text" value="${st.name}" data-id="${st.id}" data-field="name"></td>
+          <td><input type="text" value="${st.targetWord}" data-id="${st.id}" data-field="targetWord"></td>
+          <td><input type="text" value="${st.onset}" data-id="${st.id}" data-field="onset" style="width:40px;"></td>
+          <td><input type="text" value="${st.rime}" data-id="${st.id}" data-field="rime" style="width:40px;"></td>
+          <td><input type="text" value="${st.tone}" data-id="${st.id}" data-field="tone" style="width:45px;"></td>
+          <td><input type="text" value="${st.question}" data-id="${st.id}" data-field="question"></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('modal-editor').classList.add('open');
+    }
+
+    function closeEditorModal() {
+      document.getElementById('modal-editor').classList.remove('open');
+    }
+
+    function saveEditorChanges() {
+      const inputs = document.querySelectorAll('#editor-table-rows input');
+      inputs.forEach(inp => {
+        const stId = parseInt(inp.getAttribute('data-id'));
+        const field = inp.getAttribute('data-field');
+        const st = stations.find(s => s.id === stId);
+        if (st) {
+          st[field] = inp.value.trim();
+        }
+      });
+
+      localStorage.setItem('SAC_ZENG_STATIONS_DATA_V4', JSON.stringify(stations));
+      renderStationsOnMap();
+      closeEditorModal();
+      showToast("💾 Đã lưu bộ câu hỏi mới thành công!");
+    }
+
+    function resetDefaultData() {
+      if (confirm("Thầy/Cô có muốn khôi phục về bộ dữ liệu mặc định ban đầu không?")) {
+        localStorage.removeItem('SAC_ZENG_STATIONS_DATA_V4');
+        stations = JSON.parse(JSON.stringify(DEFAULT_STATIONS));
+        openEditorModal();
+        renderStationsOnMap();
+        showToast("✨ Đã khôi phục bộ dữ liệu mặc định!");
+      }
+    }
+
+    /* ==========================================================================
+       10. CÁC TIỆN ÍCH LỚP HỌC (TOAST, FULLSCREEN, SOUND TOGGLE)
+       ========================================================================== */
+    let toastTimeout = null;
+    function showToast(msg) {
+      const banner = document.getElementById('toast-banner');
+      document.getElementById('toast-msg').innerText = msg;
+      banner.classList.add('show');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        banner.classList.remove('show');
+      }, 3500);
+    }
+
+    function toggleFullscreen() {
+      const docEl = document.documentElement;
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (docEl.requestFullscreen) {
+          docEl.requestFullscreen().catch(() => {});
+        } else if (docEl.webkitRequestFullscreen) {
+          docEl.webkitRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      }
+    }
+
+    function updateFullscreenBtn() {
+      const btn = document.getElementById('btn-toggle-fullscreen');
+      if (!btn) return;
+      const isFull = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      if (isFull) {
+        btn.innerHTML = '⤓ Thu nhỏ';
+        btn.title = "Thoát chế độ toàn màn hình (hoặc bấm phím Esc)";
+      } else {
+        btn.innerHTML = 'Toàn màn hình';
+        btn.title = "Phóng to toàn màn hình máy chiếu";
+      }
+    }
+
+    document.addEventListener('fullscreenchange', updateFullscreenBtn);
+    document.addEventListener('webkitfullscreenchange', updateFullscreenBtn);
+
+    function toggleSound() {
+      gameState.soundEnabled = !gameState.soundEnabled;
+      const icon = document.getElementById('sound-icon');
+      if (gameState.soundEnabled) {
+        icon.innerText = "🔊";
+        showToast("🔊 Đã bật âm thanh!");
+      } else {
+        icon.innerText = "🔇";
+        showToast("🔇 Đã tắt âm thanh!");
+      }
+    }
+
+    /* ==========================================================================
+       11. GẮN SỰ KIỆN KHỞI TẠO HỆ THỐNG
+       ========================================================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStationsData();
+      renderStationsOnMap();
+      updateHUD();
+
+      // Nút xúc xắc & Tung xúc xắc
+      
+      // Bấm vào mascot góc trái: Đổi tư thế sinh động & phát âm thanh chào
+      const cornerMascot = document.getElementById('map-mascot-img');
+      if (cornerMascot) {
+        let isAltPose = false;
+        cornerMascot.addEventListener('click', () => {
+          isAltPose = !isAltPose;
+          cornerMascot.style.transform = 'scale(1.18) rotate(6deg)';
+          setTimeout(() => { cornerMascot.style.transform = 'scale(1)'; }, 300);
+
+          if (gameState.currentTeam === 1) {
+            cornerMascot.src = isAltPose ? "assets/akeng_idle_cropped.png" : "assets/akeng_play_cropped.png";
+            SoundEffects.openModal();
+            aiVoiceEngine.speak("A-Keng xin chào bà con và các bạn!", 'male');
+          } else {
+            cornerMascot.src = isAltPose ? "assets/amay_idle_cropped.png" : "assets/amay_celebrate_cropped.png";
+            SoundEffects.correctChime();
+            aiVoiceEngine.speak("A-Mây chúc các bạn ghép chữ thật giỏi nhé!", 'female');
+          }
+        });
+      }
+
+      document.getElementById('btn-roll-dice').addEventListener('click', () => handleRollDice());
+      document.getElementById('dice-cube-elem').addEventListener('click', () => handleRollDice());
+
+      // Can thiệp số bước cho Giáo viên
+      document.querySelectorAll('.dice-num-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const step = parseInt(btn.getAttribute('data-step'));
+          handleRollDice(step);
+        });
+      });
+
+      // Nút trong Cửa sổ thử thách
+      const btnSpeakTeam = document.getElementById('btn-speak-team');
+      if (btnSpeakTeam) {
+        btnSpeakTeam.addEventListener('click', speakCurrentTeamWord);
+      }
+      const btnSpeakPaco = document.getElementById('btn-speak-paco');
+      if (btnSpeakPaco) {
+        btnSpeakPaco.addEventListener('click', speakPacoCurrent);
+      }
+
+      document.getElementById('btn-show-hint').addEventListener('click', handleShowHint);
+      document.getElementById('btn-show-answer').addEventListener('click', handleShowAnswer);
+      document.getElementById('btn-verdict-correct').addEventListener('click', handleVerdictCorrect);
+      document.getElementById('btn-verdict-retry').addEventListener('click', handleVerdictRetry);
+      // Nút trong Cửa sổ chiến thắng
+      document.getElementById('btn-victory-restart').addEventListener('click', resetGameSession);
+      document.getElementById('btn-victory-close').addEventListener('click', () => {
+        document.getElementById('modal-victory').classList.remove('open');
+      });
+
+      // Thanh công cụ giáo viên
+      document.getElementById('btn-toggle-sound').addEventListener('click', toggleSound);
+      document.getElementById('btn-undo-turn').addEventListener('click', undoLastTurn);
+      document.getElementById('btn-toggle-fullscreen').addEventListener('click', toggleFullscreen);
+      document.getElementById('btn-reset-game').addEventListener('click', resetGameSession);
+
+      // Bộ soạn bài
+      document.getElementById('btn-open-editor').addEventListener('click', openEditorModal);
+      document.getElementById('btn-close-editor').addEventListener('click', closeEditorModal);
+      document.getElementById('btn-save-editor').addEventListener('click', saveEditorChanges);
+      document.getElementById('btn-reset-default-data').addEventListener('click', resetDefaultData);
+
+      // Kích hoạt audio context sau tương tác đầu tiên của người dùng
+      document.body.addEventListener('click', () => {
+        getAudioContext();
+      }, { once: true });
+    });
+  </script>
+
+  <!-- ==========================================================================
+       OVERLAY HOẠT ĐỘNG DỆT DÈNG Ở GIỮA MÀN HÌNH KHI TUNG XÚC XẮC
+       ========================================================================== -->
+  <div class="loom-dice-overlay" id="loom-dice-overlay">
+    <div class="loom-dice-modal">
+      <div class="loom-modal-header">
+        <span style="font-size: 1.8rem;">🧵</span>
+        <h3 id="loom-dice-title">KHUNG DỆT ĐANG TUNG THOI...</h3>
+      </div>
+
+      <!-- Mô phỏng thoi dệt thổ cẩm Zèng -->
+      <div class="zeng-loom-stage">
+        <div class="loom-threads-warp">
+          <span class="thread t-red"></span>
+          <span class="thread t-gold"></span>
+          <span class="thread t-blue"></span>
+          <span class="thread t-dark"></span>
+          <span class="thread t-red"></span>
+          <span class="thread t-gold"></span>
+          <span class="thread t-blue"></span>
+          <span class="thread t-dark"></span>
+          <span class="thread t-red"></span>
+          <span class="thread t-gold"></span>
+        </div>
+        <div class="loom-shuttle" id="loom-shuttle-elem"></div>
+      </div>
+
+      <!-- Con số xúc xắc bung tỏa rạng rỡ -->
+      <div class="loom-dice-result" id="loom-dice-result-box">
+        <div class="dice-giant-number-wrap" id="loom-giant-number">🎲</div>
+        <div class="loom-result-badge" id="loom-result-badge">Đang dệt hoa văn Zèng...</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
