@@ -1032,31 +1032,52 @@
       display: block;
     }
 
-    .reveal-keyword-row {
+        .reveal-keyword-row {
       display: flex;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 4px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 4px;
+      background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+      border: 2.5px solid #f43f5e;
+      border-radius: 16px;
+      padding: 12px 20px;
+      margin-bottom: 10px;
+      box-shadow: 0 6px 18px rgba(225, 29, 72, 0.14), inset 0 0 0 2px rgba(255, 255, 255, 0.75);
     }
 
     .reveal-label {
-      font-size: 0.78rem;
-      font-weight: 800;
-      color: #3730a3;
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: #be123c;
+      background: #fecdd3;
+      padding: 2px 14px;
+      border-radius: 999px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
     }
 
     .reveal-word {
-      font-size: 1.8rem;
+      font-size: 2.55rem;
       font-weight: 900;
-      color: #1e1b4b;
-      letter-spacing: 1px;
+      font-family: var(--font-display);
+      color: #dc2626 !important;
+      letter-spacing: 3px;
+      line-height: 1.15;
+      margin: 2px 0 4px;
+      text-shadow: 0 3px 10px rgba(220, 38, 38, 0.25);
     }
 
     .reveal-spelling {
-      font-size: 0.92rem;
+      font-size: 1rem;
       font-weight: 800;
-      color: #4338ca;
+      color: #3730a3;
+      background: #ffffff;
+      padding: 4px 16px;
+      border-radius: 999px;
+      border: 1.5px dashed #818cf8;
+      box-shadow: 0 2px 6px rgba(67, 56, 202, 0.08);
     }
 
     .cultural-lore-note {
@@ -1373,7 +1394,7 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 90;
+      z-index: 260;
     }
 
     /* TOAST THÔNG BÁO TỔNG QUÁT */
@@ -1453,8 +1474,8 @@
     }
 
     .loom-dice-modal {
-      width: 90%;
-      max-width: 600px;
+      width: 92%;
+      max-width: 650px;
       background: linear-gradient(145deg, #1e293b, #0f172a);
       border: 3.5px solid var(--zeng-gold);
       border-radius: 28px;
@@ -1477,16 +1498,22 @@
     .loom-modal-header {
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      width: 100%;
       margin-bottom: 20px;
+      text-align: center;
     }
 
     .loom-modal-header h3 {
-      font-size: 1.45rem;
+      font-size: 1.32rem;
       font-weight: 900;
       font-family: var(--font-display);
       color: #ffd43b;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
+      line-height: 1.35;
+      margin: 0 auto;
+      text-align: center;
+      white-space: nowrap;
       text-shadow: 0 2px 10px rgba(245, 159, 0, 0.5);
     }
 
@@ -1826,6 +1853,126 @@
       white-space: normal;
     }
 
+
+    /* NÚT CHỌN ĐỘI ĐI TRƯỚC / ĐỔI LƯỢT & HIỆU ỨNG ĂN MỪNG ĐÚNG RỒI */
+    .team-card {
+      cursor: pointer;
+      user-select: none;
+    }
+    .team-card:hover {
+      transform: translateY(-2px) scale(1.02);
+    }
+    .btn-switch-team {
+      background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+      color: #1e293b;
+      border: 1.5px solid #94a3b8;
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+    }
+    .btn-switch-team:hover {
+      background: linear-gradient(135deg, #fef08a, #fde047);
+      color: #854d0e;
+      border-color: #eab308;
+      transform: scale(1.06);
+    }
+    .correct-celebration-stamp {
+      position: absolute;
+      inset: 0;
+      z-index: 60;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(3px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: all 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .correct-celebration-stamp.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .stamp-badge-inner {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      border: 4px solid #fef08a;
+      border-radius: 28px;
+      padding: 20px 36px;
+      color: #ffffff;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 35px rgba(34, 197, 94, 0.8);
+      animation: stampPulse 0.6s infinite alternate ease-in-out;
+    }
+    @keyframes stampPulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.06); }
+    }
+    .stamp-badge-icon {
+      font-size: 3.4rem;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stamp-badge-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      font-family: var(--font-display);
+      color: #fef08a;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    }
+    .stamp-badge-sub {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-top: 4px;
+    }
+
+
+    .team-victory-slot {
+      padding: 14px 22px;
+      border-radius: 18px;
+      transition: all 0.35s ease;
+      position: relative;
+      min-width: 190px;
+    }
+    .team-victory-slot.winner-glow {
+      background: linear-gradient(135deg, #fef9c3, #fde047);
+      border: 3px solid #eab308;
+      box-shadow: 0 10px 30px rgba(234, 179, 8, 0.45), 0 0 20px rgba(250, 204, 21, 0.6);
+      transform: scale(1.08);
+    }
+    .winner-crown-pill {
+      display: none;
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      color: #fef08a;
+      font-size: 0.72rem;
+      font-weight: 900;
+      padding: 3px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+      box-shadow: 0 3px 8px rgba(185, 28, 28, 0.35);
+    }
+    .team-victory-slot.winner-glow .winner-crown-pill {
+      display: inline-block;
+    }
+    .victory-mascot-img {
+      width: 78px;
+      height: 92px;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
+      margin-bottom: 4px;
+    }
+
   </style>
 </head>
 <body>
@@ -1849,7 +1996,7 @@
       <!-- Bảng điểm 2 Đội -->
       <div class="scoreboard-hud">
         <!-- Đội 1: A Keng (Đỏ) -->
-        <div class="team-card team-1 active-turn" id="hud-team-1">
+        <div class="team-card team-1 active-turn" id="hud-team-1" title="Bấm vào đây để chọn Đội A Keng đi trước hoặc đổi lượt">
           <div class="turn-indicator-pill">ĐANG ĐẾN LƯỢT</div>
           <div class="team-avatar-badge team-keng-avatar" style="color: #e11d48;">
             <img src="assets/akeng_idle_cropped.png" alt="A Keng" class="team-avatar-img">
@@ -1865,7 +2012,7 @@
         </div>
 
         <!-- Đội 2: A Mây (Xanh) -->
-        <div class="team-card team-2" id="hud-team-2">
+        <div class="team-card team-2" id="hud-team-2" title="Bấm vào đây để chọn Đội A Mây đi trước hoặc đổi lượt">
           <div class="turn-indicator-pill">ĐANG ĐẾN LƯỢT</div>
           <div class="team-avatar-badge team-may-avatar" style="color: #0284c7;">
             <img src="assets/amay_idle_cropped.png" alt="A Mây" class="team-avatar-img">
@@ -1889,6 +2036,7 @@
         <button class="btn-tool" id="btn-undo-turn" title="Hoàn tác lượt vừa đi nếu bấm nhầm">
           Hoàn tác
         </button>
+        <button class="btn-tool" id="btn-open-victory" title="Mở bảng tổng kết vinh danh đội chiến thắng & bắn pháo hoa" style="background:linear-gradient(135deg,#fef08a,#facc15);color:#854d0e;border-color:#eab308;font-weight:900;">🏆 Vinh danh</button>
         <button class="btn-tool btn-primary" id="btn-open-editor" title="Chỉnh sửa câu hỏi 20 ô theo giáo án">
           Soạn bài
         </button>
@@ -1997,7 +2145,14 @@
          CỬA SỔ THỬ THÁCH GHÉP CHỮ TRÊN KHUNG DỆT (CHALLENGE MODAL)
          ========================================================================== -->
     <div class="modal-overlay" id="modal-challenge">
-      <div class="challenge-card">
+      <div class="challenge-card" style="position: relative;">
+        <div class="correct-celebration-stamp" id="correct-celebration-stamp">
+          <div class="stamp-badge-inner">
+            <div class="stamp-badge-icon">🌟🎉🌟</div>
+            <div class="stamp-badge-title" id="stamp-badge-title">CHÍNH XÁC TUYỆT VỜI!</div>
+            <div class="stamp-badge-sub" id="stamp-badge-sub">Thưởng +20 Sao Zèng ⭐</div>
+          </div>
+        </div>
         
         <!-- Thanh đầu thẻ thử thách -->
         <div class="card-top-bar">
@@ -2059,7 +2214,7 @@
             <div class="reveal-keyword-row">
               <span class="reveal-label">Từ Khóa:</span>
               <span class="reveal-word" id="modal-target-word">HỌC</span>
-              <span class="reveal-spelling" id="modal-spelling-text">(Hờ - oc - hóc - nặng - HỌC)</span>
+              <span class="reveal-spelling" id="modal-spelling-text">(Hờ - oc - hoc - nặng - HỌC)</span>
             </div>
             
             
@@ -2122,16 +2277,18 @@
         <p class="victory-subtitle" id="victory-subtext">Chúc mừng hai đội đã hoàn thành xuất sắc hành trình học chữ tại A Lưới!</p>
         
         <div class="winner-highlight-card">
-          <div class="team-victory-slot">
-            <span style="font-size: 2.2rem;">👦</span>
+          <div class="team-victory-slot" id="victory-slot-1">
+            <span class="winner-crown-pill">👑 QUÁN QUÂN</span>
+            <img src="assets/akeng_play_cropped.png" alt="Đội A Keng" class="victory-mascot-img">
             <span class="team-victory-name" style="color: #e11d48;">ĐỘI A KENG</span>
             <span class="team-victory-score" id="victory-score-1">0 ⭐</span>
           </div>
 
           <div style="font-size: 1.8rem; font-weight: 900; color: #94a3b8;">VS</div>
 
-          <div class="team-victory-slot">
-            <span style="font-size: 2.2rem;">👧</span>
+          <div class="team-victory-slot" id="victory-slot-2">
+            <span class="winner-crown-pill">👑 QUÁN QUÂN</span>
+            <img src="assets/amay_celebrate_cropped.png" alt="Đội A Mây" class="victory-mascot-img">
             <span class="team-victory-name" style="color: #0284c7;">ĐỘI A MÂY</span>
             <span class="team-victory-score" id="victory-score-2">0 ⭐</span>
           </div>
@@ -2200,7 +2357,7 @@
        1. CẤU HÌNH DỮ LIỆU BẢN ĐỒ 24 Ô DANH THẮNG A LƯỚI & TỪ VỰNG TIẾNG VIỆT 1
        (Tách rời hoàn toàn khỏi giao diện để dễ bảo trì và mở rộng)
        ========================================================================== */
-            const DEFAULT_STATIONS = [
+      const DEFAULT_STATIONS = [
       {
         id: 0,
         x: 37.0, y: 48.0,
@@ -2225,12 +2382,12 @@
         landmark: "Lớp học chữ vùng cao",
         targetWord: "HỌC",
         onset: "h", rime: "oc", tone: "•",
-        spelling: "Hờ - oc - hóc - nặng - HỌC",
-        vietMeaning: "Tiếp thu kiến thức, rèn luyện đọc viết để mở mang hiểu biết và thắp sáng tương lai.",
-        question: "Mỗi tối bà con cùng nhau đến lớp, mở sách đọc chữ và luyện viết. Đố bạn gọi là đi làm gì?",
-        pacoWord: "Nao học",
-        ttsVi: "Hờ, oc, hóc, nặng, HỌC!",
-        ttsPaco: "Tiếng Pa Cô là: Nao học!",
+        spelling: "Hờ - oc - hoc - nặng - HỌC",
+        vietMeaning: "Đọc sách và viết bài để mở mang kiến thức, biết chữ biết câu.",
+        question: "Mở sách đọc chữ, cầm bút viết bài để biết thêm nhiều điều hay. Đố bạn gọi là làm gì?",
+        pacoWord: "Học",
+        ttsVi: "Hờ, óc, hóc, nặng, HỌC!",
+        ttsPaco: "Tiếng Pa Cô là: Học!",
         bonus: 10
       },
       {
@@ -2242,11 +2399,11 @@
         targetWord: "BÀN",
         onset: "b", rime: "an", tone: "\\",
         spelling: "Bờ - an - ban - huyền - BÀN",
-        vietMeaning: "Đồ dùng học tập có mặt phẳng và các chân vững chãi để ngồi kê vở viết chữ.",
-        question: "Cái gì có bốn chân và mặt phẳng, để học viên ngồi kê vở nắn nót viết từng nét chữ?",
-        pacoWord: "Kơ-lơng",
+        vietMeaning: "Đồ dùng quen thuộc có bốn chân và mặt phẳng để kê vở ngồi viết.",
+        question: "Có bốn cái chân, mặt gỗ phẳng phiu, cho em kê vở ngồi viết bài ngay ngắn. Là cái gì?",
+        pacoWord: "Bàn",
         ttsVi: "Bờ, an, ban, huyền, BÀN!",
-        ttsPaco: "Tiếng Pa Cô là: Kơ lơng!",
+        ttsPaco: "Tiếng Pa Cô là: Bàn!",
         bonus: 10
       },
       {
@@ -2258,11 +2415,11 @@
         targetWord: "GẶT",
         onset: "g", rime: "ăt", tone: "•",
         spelling: "Gờ - ăt - găt - nặng - GẶT",
-        vietMeaning: "Công việc dùng liềm cắt những bông lúa chín vàng trĩu hạt trên nương rẫy đem về.",
-        question: "Đến mùa lúa chín vàng rực trên nương, bà con cầm liềm ra đồng làm công việc gì?",
-        pacoWord: "Pah tơ-rô",
-        ttsVi: "Gờ, ăt, găt, nặng, GẶT!",
-        ttsPaco: "Tiếng Pa Cô là: Pah tơ rô!",
+        vietMeaning: "Dùng liềm cắt những bông lúa chín vàng đem về nhà.",
+        question: "Mùa lúa chín vàng đồng, tay cầm lưỡi liềm cắt từng bông lúa trĩu hạt mang về. Gọi là làm gì?",
+        pacoWord: "Gặt",
+        ttsVi: "Gờ, ắt, gắt, nặng, GẶT!",
+        ttsPaco: "Tiếng Pa Cô là: Gặt!",
         bonus: 10
       },
       {
@@ -2274,11 +2431,11 @@
         targetWord: "BẮP",
         onset: "b", rime: "ăp", tone: "/",
         spelling: "Bờ - ăp - băp - sắc - BẮP",
-        vietMeaning: "Cây lương thực hạt vàng óng ả bọc trong áo bẹ xanh, nướng hay luộc đều thơm ngọt bùi.",
-        question: "Cây lương thực hạt vàng tăm tắp, có áo bẹ bọc ngoài, luộc hay nướng đều thơm ngọt. Đố bạn gọi là gì?",
-        pacoWord: "A-pô",
-        ttsVi: "Bờ, ăp, băp, sắc, BẮP!",
-        ttsPaco: "Tiếng Pa Cô là: A pô!",
+        vietMeaning: "Cây lương thực hạt vàng xếp đều bọc trong áo bẹ xanh, nướng hay luộc đều thơm ngọt bùi.",
+        question: "Hạt vàng đều tăm tắp, bọc trong lớp áo bẹ xanh, luộc hay nướng đều thơm ngọt bùi. Đố bạn là quả gì?",
+        pacoWord: "Bắp",
+        ttsVi: "Bờ, ắp, bắp, sắc, BẮP!",
+        ttsPaco: "Tiếng Pa Cô là: Bắp!",
         bonus: 10
       },
       {
@@ -2290,9 +2447,9 @@
         targetWord: "NHÀ",
         onset: "nh", rime: "a", tone: "\\",
         spelling: "Nhờ - a - nha - huyền - NHÀ",
-        vietMeaning: "Mái ấm gia đình sum họp, che mưa che nắng, quây quần bên bếp lửa yêu thương.",
-        question: "Nơi gia đình mình cùng quây quần bên bếp lửa ấm cúng ngày đêm. Đố bạn gọi là cái gì?",
-        pacoWord: "Đung",
+        vietMeaning: "Mái ấm sum họp của cả gia đình, che chở nắng mưa và ấm áp yêu thương.",
+        question: "Nơi che mưa che nắng, có bếp lửa ấm êm, cả gia đình cùng sum họp quây quần. Là cái gì?",
+        pacoWord: "Dung",
         ttsVi: "Nhờ, a, nha, huyền, NHÀ!",
         ttsPaco: "Tiếng Pa Cô là: Đung!",
         bonus: 10
@@ -2306,11 +2463,11 @@
         targetWord: "GÀ",
         onset: "g", rime: "a", tone: "\\",
         spelling: "Gờ - a - ga - huyền - GÀ",
-        vietMeaning: "Loài vật nuôi quen thuộc trong bản làng, sớm mai cất tiếng gáy vang báo hiệu ngày mới.",
-        question: "Con vật nuôi dậy sớm cất tiếng gáy vang 'ò ó o' đánh thức bản làng. Đố bạn là con gì?",
-        pacoWord: "A-rớc",
+        vietMeaning: "Loài vật nuôi quen thuộc gáy vang ò ó o báo hiệu trời sáng.",
+        question: "Đầu đội mào đỏ tươi, sáng sớm cất tiếng 'ò ó o' gọi cả xóm làng thức giấc. Là con gì?",
+        pacoWord: "A ooi ti kăr",
         ttsVi: "Gờ, a, ga, huyền, GÀ!",
-        ttsPaco: "Tiếng Pa Cô là: A rớc!",
+        ttsPaco: "Tiếng Pa Cô là: A ooi ti kăr!",
         bonus: 10
       },
       {
@@ -2322,11 +2479,11 @@
         targetWord: "VÀNG",
         onset: "v", rime: "ang", tone: "\\",
         spelling: "Vờ - ang - vang - huyền - VÀNG",
-        vietMeaning: "Màu sắc tươi sáng rực rỡ như hoa dã quỳ và ánh nắng mùa lúa chín trên nương cao.",
-        question: "Màu sắc rực rỡ của hoa dã quỳ nở rộ khắp triền đồi A Lưới vào mùa thu. Là màu gì?",
-        pacoWord: "Bông vàng",
+        vietMeaning: "Màu sắc tươi sáng của ánh nắng ban mai và cánh đồng lúa chín.",
+        question: "Màu của ánh nắng sớm mai, màu của quả chuối chín và cánh đồng lúa chín. Là màu gì?",
+        pacoWord: "Vàng",
         ttsVi: "Vờ, ang, vang, huyền, VÀNG!",
-        ttsPaco: "Tiếng Pa Cô là: Bông vàng!",
+        ttsPaco: "Tiếng Pa Cô là: Vàng!",
         bonus: 10
       },
       {
@@ -2338,11 +2495,11 @@
         targetWord: "CỘT",
         onset: "c", rime: "ôt", tone: "•",
         spelling: "Cờ - ôt - côt - nặng - CỘT",
-        vietMeaning: "Trụ gỗ hoặc bê tông dựng đứng chắc chắn để nâng đỡ khung nhà sàn vững chãi.",
-        question: "Thân gỗ tròn hoặc bê tông dựng đứng vững chãi để nâng đỡ mái nhà sàn. Đố bạn gọi là cái gì?",
-        pacoWord: "Tơ-nôr đung",
-        ttsVi: "Cờ, ôt, côt, nặng, CỘT!",
-        ttsPaco: "Tiếng Pa Cô là: Tơ nôr đung!",
+        vietMeaning: "Trụ gỗ đứng chắc chắn để gánh đỡ mái nhà sàn.",
+        question: "Thân gỗ tròn đứng thẳng tắp, cùng nhau gánh đỡ cả mái nhà sàn vững chãi. Đố bạn là cái gì?",
+        pacoWord: "Cột",
+        ttsVi: "Cờ, ốt, cốt, nặng, CỘT!",
+        ttsPaco: "Tiếng Pa Cô là: Cột!",
         bonus: 10
       },
       {
@@ -2354,11 +2511,11 @@
         targetWord: "PIN",
         onset: "p", rime: "in", tone: "-",
         spelling: "Pờ - in - pin",
-        vietMeaning: "Vật nhỏ tích điện tiện lợi, lắp vào đèn pin để soi sáng lối đi đêm nương rẫy.",
-        question: "Vật nhỏ hình trụ chứa điện lắp vào đèn cầm tay để soi sáng đường đi nương đêm tối. Là cục gì?",
-        pacoWord: "Đèn pin",
+        vietMeaning: "Cục nhỏ tích điện, lắp vào đèn bấm cầm tay để bật sáng soi đường lúc trời tối.",
+        question: "Cục nhỏ tích điện, lắp vào đèn bấm cầm tay, bật lên soi sáng đường đi trong đêm tối. Đố bạn là cục gì?",
+        pacoWord: "Pin",
         ttsVi: "Pờ, in, pin!",
-        ttsPaco: "Tiếng Pa Cô là: Đèn pin!",
+        ttsPaco: "Tiếng Pa Cô là: Pin!",
         bonus: 10
       },
       {
@@ -2370,11 +2527,11 @@
         targetWord: "DỆT",
         onset: "d", rime: "êt", tone: "•",
         spelling: "Dờ - êt - dêt - nặng - DỆT",
-        vietMeaning: "Nghề thủ công truyền thống đan cài từng sợi chỉ màu và hạt cườm thành tấm thổ cẩm Zèng.",
-        question: "Bàn tay khéo léo của người phụ nữ Pa Cô đưa thoi luồn hạt cườm tạo nên tấm thổ cẩm. Gọi là làm gì?",
-        pacoWord: "Tút Zèng",
-        ttsVi: "Dờ, êt, dêt, nặng, DỆT!",
-        ttsPaco: "Tiếng Pa Cô là: Tút Zèng!",
+        vietMeaning: "Đan cài sợi chỉ màu để tạo nên tấm vải thổ cẩm hoa văn.",
+        question: "Ngồi bên khung cửi, tay thoăn thoắt đưa thoi luồn từng sợi chỉ màu thành tấm vải. Gọi là làm gì?",
+        pacoWord: "Tarch zởh",
+        ttsVi: "Dờ, ết, dết, nặng, DỆT!",
+        ttsPaco: "Tiếng Pa Cô là: Tarch zởh!",
         bonus: 10
       },
       {
@@ -2386,11 +2543,11 @@
         targetWord: "KHĂN",
         onset: "kh", rime: "ăn", tone: "-",
         spelling: "Khờ - ăn - khăn",
-        vietMeaning: "Tấm vải Dèng thổ cẩm xinh xắn quàng cổ giữ ấm mùa đông và tôn nét duyên vùng cao.",
-        question: "Tấm vải Dèng thổ cẩm xinh xắn các cô gái Pa Cô thường quàng lên cổ giữ ấm mùa đông. Là cái gì?",
-        pacoWord: "Ka-răm",
+        vietMeaning: "Tấm vải mềm quấn quanh cổ giữ ấm trong những ngày trời lạnh.",
+        question: "Tấm vải mềm mại quấn quanh cổ để giữ ấm mỗi khi gió lạnh mùa đông tràn về. Là cái gì?",
+        pacoWord: "Khăn",
         ttsVi: "Khờ, ăn, khăn!",
-        ttsPaco: "Tiếng Pa Cô là: Ka răm!",
+        ttsPaco: "Tiếng Pa Cô là: Khăn!",
         bonus: 10
       },
       {
@@ -2402,11 +2559,11 @@
         targetWord: "VỊT",
         onset: "v", rime: "it", tone: "•",
         spelling: "Vờ - it - vit - nặng - VỊT",
-        vietMeaning: "Loài thủy cầm chân có màng, mỏ dẹp, bơi lội tung tăng trên dòng suối trong lành.",
-        question: "Con gì chân có màng, mỏ dẹp, bơi lội dưới suối kêu 'cạp cạp'?",
-        pacoWord: "A-đà",
-        ttsVi: "Vờ, it, vit, nặng, VỊT!",
-        ttsPaco: "Tiếng Pa Cô là: A đà!",
+        vietMeaning: "Loài vật nuôi chân có màng, mỏ bẹt, bơi lội dưới nước và kêu cạp cạp.",
+        question: "Chân có màng, mỏ bẹt màu vàng, bơi tung tăng dưới nước kêu 'cạp cạp'. Là con gì?",
+        pacoWord: "A Ta",
+        ttsVi: "Vờ, ít, vít, nặng, VỊT!",
+        ttsPaco: "Tiếng Pa Cô là: A Ta!",
         bonus: 10
       },
       {
@@ -2418,11 +2575,11 @@
         targetWord: "SEN",
         onset: "s", rime: "en", tone: "-",
         spelling: "Sờ - en - sen",
-        vietMeaning: "Loài hoa thơm ngát vươn lên từ đầm nước, tượng trưng cho nét đẹp thanh khiết.",
-        question: "Loài hoa thơm ngát vươn lên từ bùn lầy, cánh hồng nhị vàng thanh khiết. Là hoa gì?",
-        pacoWord: "Bông hoa sen",
+        vietMeaning: "Loài hoa thơm ngát vươn lên giữa đầm nước, thanh khiết và đẹp đẽ.",
+        question: "Nở ngát hương thơm giữa đầm nước, cánh hồng nhị vàng, gần bùn mà chẳng hôi tanh mùi bùn. Là hoa gì?",
+        pacoWord: "piêr Sen",
         ttsVi: "Sờ, en, sen!",
-        ttsPaco: "Tiếng Pa Cô là: Bông hoa sen!",
+        ttsPaco: "Tiếng Pa Cô là: piêr Sen!",
         bonus: 10
       },
       {
@@ -2434,11 +2591,11 @@
         targetWord: "SƠN",
         onset: "s", rime: "ơn", tone: "-",
         spelling: "Sờ - ơn - sơn",
-        vietMeaning: "Chất màu dạng lỏng dùng quét trang trí cho ngôi nhà và đồ dùng thêm tươi tắn, bền đẹp.",
-        question: "Chất màu dạng nước dùng quét lên cửa gỗ hoặc tường để trang trí cho ngôi nhà thêm đẹp. Gọi là gì?",
-        pacoWord: "A-xem",
+        vietMeaning: "Chất lỏng màu sắc dùng quét lên tường hoặc cửa gỗ để làm đẹp và bảo vệ.",
+        question: "Chất nước nhiều màu sắc, dùng cọ quét lên tường nhà hay cửa gỗ cho mới và đẹp. Đố bạn là gì?",
+        pacoWord: "poảnh dung",
         ttsVi: "Sờ, ơn, sơn!",
-        ttsPaco: "Tiếng Pa Cô là: A xem!",
+        ttsPaco: "Tiếng Pa Cô là: poảnh đung!",
         bonus: 10
       },
       {
@@ -2450,11 +2607,11 @@
         targetWord: "CAM",
         onset: "c", rime: "am", tone: "-",
         spelling: "Cờ - am - cam",
-        vietMeaning: "Loại quả tròn mọng nước, múi vàng óng ngọt thanh, chứa nhiều vitamin bồi bổ cơ thể.",
-        question: "Quả hình tròn, múi mọng nước, vị ngọt thanh mát giàu vitamin. Đố bạn là quả gì?",
-        pacoWord: "Plây cam",
+        vietMeaning: "Loại quả tròn nhiều múi mọng nước ngọt thanh, giàu vitamin tốt cho sức khỏe.",
+        question: "Quả hình tròn, vỏ vàng mọng nước, bóc ra nhiều múi ngọt mát giàu vitamin. Đố bạn là quả gì?",
+        pacoWord: "piêh Kam",
         ttsVi: "Cờ, am, cam!",
-        ttsPaco: "Tiếng Pa Cô là: Plây cam!",
+        ttsPaco: "Tiếng Pa Cô là: piêh Kam!",
         bonus: 10
       },
       {
@@ -2466,11 +2623,11 @@
         targetWord: "CÁT",
         onset: "c", rime: "at", tone: "/",
         spelling: "Cờ - at - cat - sắc - CÁT",
-        vietMeaning: "Những hạt khoáng chất nhỏ mịn màu vàng trải dài êm ái bên bờ suối mát.",
-        question: "Hạt khoáng chất mịn màng màu vàng óng trải dài ven bờ suối trong vắt. Gọi là gì?",
-        pacoWord: "Khát đác",
-        ttsVi: "Cờ, at, cat, sắc, CÁT!",
-        ttsPaco: "Tiếng Pa Cô là: Khát đác!",
+        vietMeaning: "Những hạt nhỏ mịn màu vàng trải dài trên bờ biển mênh mông sóng vỗ.",
+        question: "Những hạt nhỏ li ti màu vàng mịn màng, trải dài khắp bãi biển mênh mông sóng vỗ rì rào. Là gì?",
+        pacoWord: "A keenh Biển",
+        ttsVi: "Cờ, át, cát, sắc, CÁT!",
+        ttsPaco: "Tiếng Pa Cô là: A keenh Biển!",
         bonus: 10
       },
       {
@@ -2482,11 +2639,11 @@
         targetWord: "MẬT",
         onset: "m", rime: "ât", tone: "•",
         spelling: "Mờ - ât - mât - nặng - MẬT",
-        vietMeaning: "Chất ngọt sánh óng ánh do đàn ong rừng chắt chiu từ muôn hoa Trường Sơn.",
-        question: "Chất lỏng sánh vàng óng ánh, vị ngọt đậm đà do đàn ong rừng chắt chiu từ hoa rừng Trường Sơn. Là gì?",
-        pacoWord: "Đác xút",
-        ttsVi: "Mờ, ât, mât, nặng, MẬT!",
-        ttsPaco: "Tiếng Pa Cô là: Đác xút!",
+        vietMeaning: "Chất sánh vàng thơm ngọt đậm đà do đàn ong chăm chỉ làm ra từ nhuỵ hoa.",
+        question: "Đàn ong chăm chỉ đi tìm phấn hoa, chắt chiu từng giọt sánh vàng ngọt lịm. Đố bạn gọi là gì?",
+        pacoWord: "Mật",
+        ttsVi: "Mờ, ất, mất, nặng, MẬT!",
+        ttsPaco: "Tiếng Pa Cô là: Mật!",
         bonus: 10
       },
       {
@@ -2498,11 +2655,11 @@
         targetWord: "NÓN",
         onset: "n", rime: "on", tone: "/",
         spelling: "Nờ - on - non - sắc - NÓN",
-        vietMeaning: "Vật đội đầu che mưa nắng đan từ lá cọ khéo léo, thân thương cùng mẹ lên nương.",
-        question: "Vật đan bằng lá cọ hình chóp nhọn, mẹ hay đội trên đầu che mưa che nắng khi lên nương. Là cái gì?",
-        pacoWord: "A-đô",
+        vietMeaning: "Vật đan bằng lá có hình chóp nhọn, dùng đội đầu để che mưa che nắng.",
+        question: "Khâu bằng lá cọ hình chóp nhọn, đội trên đầu che nắng che mưa cho bà và mẹ. Là cái gì?",
+        pacoWord: "Nón",
         ttsVi: "Nờ, on, non, sắc, NÓN!",
-        ttsPaco: "Tiếng Pa Cô là: A đô!",
+        ttsPaco: "Tiếng Pa Cô là: Nón!",
         bonus: 10
       },
       {
@@ -2514,11 +2671,11 @@
         targetWord: "LÊN",
         onset: "l", rime: "ên", tone: "-",
         spelling: "Lờ - ên - lên",
-        vietMeaning: "Hành động bước từng bước vượt qua con dốc, tiến về phía đỉnh núi cao.",
-        question: "Hành động bước từng bước vượt qua các bậc dốc để chinh phục đỉnh núi cao. Trái nghĩa với 'xuống' là gì?",
-        pacoWord: "Chô",
+        vietMeaning: "Hành động bước về phía trên cao, là từ đối lập và trái nghĩa với 'xuống'.",
+        question: "Bước từng bước vượt qua con dốc để tới đỉnh đồi, từ trái nghĩa với từ 'xuống' là từ gì?",
+        pacoWord: "Sân",
         ttsVi: "Lờ, ên, lên!",
-        ttsPaco: "Tiếng Pa Cô là: Chô!",
+        ttsPaco: "Tiếng Pa Cô là: Sân!",
         bonus: 10
       },
       {
@@ -2530,11 +2687,11 @@
         targetWord: "SẠP",
         onset: "s", rime: "ap", tone: "•",
         spelling: "Sờ - ap - sap - nặng - SẠP",
-        vietMeaning: "Điệu nhảy dân gian rộn rã gõ nhịp tre chan chát trong ngày hội lớn mừng bản làng no ấm.",
-        question: "Điệu nhảy dân gian vượt qua những thanh tre gõ nhịp chan chát trong ngày hội vui của bản làng. Đố bạn gọi là gì?",
-        pacoWord: "Múa sạp",
-        ttsVi: "Sờ, ap, sap, nặng, SẠP!",
-        ttsPaco: "Tiếng Pa Cô là: Múa sạp!",
+        vietMeaning: "Điệu múa dân gian rộn rã gõ nhịp thanh tre trong ngày hội tưng bừng của bản làng.",
+        question: "Gõ hai thanh tre lách cách thành nhịp, đôi chân nhảy qua nhảy lại nhịp nhàng trong ngày hội. Đố bạn là điệu gì?",
+        pacoWord: "Ayưn sạp",
+        ttsVi: "Sờ, áp, sáp, nặng, SẠP!",
+        ttsPaco: "Tiếng Pa Cô là: a dưn sạp!",
         bonus: 50
       }
     ];
@@ -2559,6 +2716,7 @@
     let gameState = {
       phase: GAME_STATES.READY,
       currentTeam: 1, // 1: A Keng (Đỏ), 2: A Mây (Xanh)
+      startingTeam: 1,
       teams: {
         1: { id: 1, name: "Đội A Keng", color: "#e11d48", position: 0, score: 0, finished: false },
         2: { id: 2, name: "Đội A Mây", color: "#0284c7", position: 0, score: 0, finished: false }
@@ -2610,7 +2768,9 @@
         this.stop();
         // File audio neural studio đã tạo sẵn trong assets/audio/
         // type: 'female' (Hoài My), 'male' (Nam Minh), 'paco' (Tiếng Pa Cô)
-        const audioPath = `assets/audio/station_${stationId}_${type}.mp3`;
+        const isHttp = window.location.protocol.startsWith('http');
+        const cacheBuster = isHttp ? '?v=12' : '';
+        const audioPath = `assets/audio/station_${stationId}_${type}.mp3${cacheBuster}`;
         const audio = new Audio(audioPath);
         this.currentAudio = audio;
 
@@ -2624,7 +2784,7 @@
           if (gameState.currentStation) {
             const st = gameState.currentStation;
             const text = (type === 'paco') ? (st.ttsPaco || ("Tiếng Pa Cô là: " + st.pacoWord)) :
-                         `${st.spelling || st.targetWord}. Nghĩa là: ${st.vietMeaning || ""}. Tiếng Pa Cô là: ${st.pacoWord || ""}.`;
+                         `${st.ttsVi || st.spelling || st.targetWord}. Nghĩa là: ${st.vietMeaning || ""}. Tiếng Pa Cô là: ${st.pacoWord || ""}.`;
             this.speakFallback(text, (type === 'female' ? 'female' : 'male'), onEnd);
           }
         };
@@ -2954,7 +3114,8 @@
        5. KHỞI TẠO BẢN ĐỒ 24 Ô & VẼ ĐƯỜNG MÒN SVG UỐN LƯỢN
        ========================================================================== */
         function loadStationsData() {
-      const saved = localStorage.getItem('SAC_ZENG_STATIONS_DATA_V4');
+      ['SAC_ZENG_STATIONS_DATA', 'SAC_ZENG_STATIONS_DATA_V1', 'SAC_ZENG_STATIONS_DATA_V2', 'SAC_ZENG_STATIONS_DATA_V10', 'SAC_ZENG_STATIONS_DATA_V12'].forEach(k => { try { localStorage.removeItem(k); } catch(e){} });
+      const saved = localStorage.getItem('SAC_ZENG_STATIONS_DATA_V12');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -3307,6 +3468,25 @@
     // Khi nhân vật dừng tại ô đích của lượt
     function onMoveFinished() {
       const activeTeam = gameState.teams[gameState.currentTeam];
+      const otherTeamId = gameState.currentTeam === 1 ? 2 : 1;
+      const otherTeam = gameState.teams[otherTeamId];
+
+      // Phương án 1: Nếu đi trúng ô đang có đội bạn đứng (từ ô 1 đến ô 19) -> Tự động nhảy cóc tiến thêm 1 ô mới!
+      if (activeTeam.position > 0 && activeTeam.position < 20 && activeTeam.position === otherTeam.position) {
+        showToast(`⚡ Ô số ${activeTeam.position} đã có ${otherTeam.name} đứng! ${activeTeam.name} được nhảy tiến thêm 1 ô sang trạm mới!`);
+        SoundEffects.correctChime();
+        setTimeout(() => {
+          activeTeam.position = Math.min(20, activeTeam.position + 1);
+          SoundEffects.stepJump();
+          updatePlayerTokensPosition();
+          renderTrailSvg();
+          setTimeout(() => {
+            onMoveFinished();
+          }, 450);
+        }, 650);
+        return;
+      }
+
       const landedStation = stations.find(s => s.id === activeTeam.position);
       gameState.currentStation = landedStation;
       gameState.rewardCollectedInTurn = false;
@@ -3346,7 +3526,30 @@
     /* ==========================================================================
        7. CỬA SỔ THỬ THÁCH GHÉP CHỮ TRÊN KHUNG DỆT (CHALLENGE MODAL LOGIC)
        ========================================================================== */
-            function openChallengeModal(station) {
+    // Cho phép giáo viên bấm trực tiếp vào bất kỳ ô trạm nào trên bản đồ để mở nhanh
+    function onPinClicked(station) {
+      if (!station || station.id === 0) {
+        showToast("🏁 Đây là Cổng Khởi Hành!");
+        return;
+      }
+      const activeTeam = gameState.teams[gameState.currentTeam];
+      activeTeam.position = station.id;
+      gameState.currentStation = station;
+      gameState.rewardCollectedInTurn = false;
+      updatePlayerTokensPosition();
+      renderTrailSvg();
+
+      if (station.id === 20) {
+        activeTeam.finished = true;
+        activeTeam.score += station.bonus;
+        updateHUD();
+        SoundEffects.victoryFanfare();
+        launchConfetti(120);
+      }
+      openChallengeModal(station);
+    }
+
+    function openChallengeModal(station) {
       gameState.phase = GAME_STATES.CHALLENGE;
       updateHUD();
 
@@ -3397,6 +3600,8 @@
 
       // Giữ hộp đáp án ẩn kín cho đến khi giáo viên bấm Hiện Đáp Án
       document.getElementById('modal-answer-box').classList.remove('show');
+      const stmp = document.getElementById('correct-celebration-stamp');
+      if (stmp) stmp.classList.remove('active');
 
       SoundEffects.openModal();
       document.getElementById('modal-challenge').classList.add('open');
@@ -3426,8 +3631,28 @@
       showToast("💡 Đã mở gợi ý Âm đầu và Vần cho học viên!");
     }
 
+    // Giáo viên chọn đội đi trước hoặc đổi lượt trực tiếp
+    function selectActiveTeam(teamId) {
+      if (gameState.phase !== GAME_STATES.READY) {
+        showToast("⏳ Đang trong lượt di chuyển/thử thách, vui lòng đổi đội khi ở trạng thái Sẵn Sàng!");
+        return;
+      }
+      gameState.currentTeam = teamId;
+      if (gameState.teams[1].position === 0 && gameState.teams[2].position === 0) {
+        gameState.startingTeam = teamId;
+      }
+      SoundEffects.openModal();
+      updateHUD();
+      const tName = gameState.teams[teamId].name;
+      if (gameState.teams[1].position === 0 && gameState.teams[2].position === 0) {
+        showToast(`👉 Đã chọn ${tName} là người bắt đầu trước!`);
+      } else {
+        showToast(`👉 Đã chuyển lượt sang ${tName}!`);
+      }
+    }
+
     // Giáo viên mở toàn bộ đáp án: HIỆN ĐÁP ÁN & ĐỌC ĐÁNH VẦN BẰNG GIỌNG AI
-    function handleShowAnswer() {
+    function handleShowAnswer(playVoice = true) {
       if (!gameState.currentStation) return;
       const st = gameState.currentStation;
 
@@ -3442,16 +3667,18 @@
 
       // Hiện khung đáp án, đánh vần và tiếng Pa Cô
       document.getElementById('modal-answer-box').classList.add('show');
-      showToast("👁️ Đã hiển thị đáp án!");
 
-      // Tự động phát âm chuẩn studio theo đội đang chơi: A-Keng -> Nam, A-Mây -> Nữ
-      const activeTeam = gameState.teams[gameState.currentTeam];
-      const voiceType = (activeTeam.id === 1) ? 'male' : 'female';
-      aiVoiceEngine.playStudioAudio(st.id, voiceType);
+      if (playVoice) {
+        showToast("👁️ Đã hiển thị đáp án!");
+        const activeTeam = gameState.teams[gameState.currentTeam];
+        const voiceType = (activeTeam.id === 1) ? 'male' : 'female';
+        aiVoiceEngine.playStudioAudio(st.id, voiceType);
+      }
     }
 
-    // Giáo viên xác nhận: HỌC VIÊN GHÉP ĐÚNG TRÊN KHUNG DỆT (+Sao Zèng)
+    // Giáo viên xác nhận: HỌC VIÊN GHÉP ĐÚNG TRÊN KHUNG DỆT (+Sao Zèng, chỉ hiện hiệu ứng chúc mừng, KHÔNG đọc lại voice)
     function handleVerdictCorrect() {
+      aiVoiceEngine.stop();
       const activeTeam = gameState.teams[gameState.currentTeam];
       
       if (!gameState.rewardCollectedInTurn) {
@@ -3461,17 +3688,28 @@
         updateHUD();
       }
 
+      // Mở thẻ chữ trực quan nhưng KHÔNG phát giọng đọc
+      handleShowAnswer(false);
+
+      // Hiệu ứng huy hiệu chúc mừng bung nở giữa thẻ + pháo hoa kép + nhạc chuông chiến thắng
+      const stamp = document.getElementById('correct-celebration-stamp');
+      const stampTitle = document.getElementById('stamp-badge-title');
+      const stampSub = document.getElementById('stamp-badge-sub');
+      if (stampTitle) stampTitle.innerText = `${activeTeam.name.toUpperCase()} XUẤT SẮC!`;
+      if (stampSub) stampSub.innerText = `Ghép đúng từ "${gameState.currentStation ? gameState.currentStation.targetWord : ''}" (+20 ⭐)`;
+      if (stamp) stamp.classList.add('active');
+
       SoundEffects.correctChime();
-      launchConfetti(80);
+      setTimeout(() => SoundEffects.victoryFanfare(), 180);
+      launchConfetti(100);
+      setTimeout(() => launchConfetti(70), 300);
       showToast(`🌟 RẤT TỐT! ${activeTeam.name} ghép đúng từ khóa (+20⭐)!`);
 
-      // Mở đáp án và phát âm đánh vần
-      handleShowAnswer();
-
       setTimeout(() => {
+        if (stamp) stamp.classList.remove('active');
         closeChallengeModal();
         checkGameCompletionOrNextTurn();
-      }, 1600);
+      }, 1450);
     }
 
     // Giáo viên xác nhận: HỌC VIÊN CHƯA ĐÚNG -> CHO PHÉP THỬ LẠI
@@ -3496,22 +3734,10 @@
       const team1 = gameState.teams[1];
       const team2 = gameState.teams[2];
 
-      // Điều kiện kết thúc ván:
-      // 1. Cả 2 đội đều đã về đích (finished)
-      // 2. Hoặc Đội 1 đã về đích trước và Đội 2 vừa hoàn thành lượt đi công bằng cuối cùng của mình
-      const isGameOver = (team1.finished && team2.finished) || 
-                         (team1.finished && gameState.currentTeam === 2) ||
-                         (team2.finished && gameState.currentTeam === 2 && !team1.finished);
-
-      if (isGameOver) {
-        // Mở cửa sổ tổng kết và vinh danh chiến thắng dựa trên TỔNG ĐIỂM
+      // Khi có đội về đến ĐÍCH (Trạm 20 - Nhà Rông Lớn) và hoàn thành thử thách cuối -> Kết thúc ván chơi và tổng kết điểm vinh danh!
+      if (team1.finished || team2.finished) {
         openVictoryModal();
         return;
-      }
-
-      // Nếu Đội 1 vừa cán đích -> Báo hiệu Đội 2 được đi nốt lượt cuối cùng
-      if (team1.finished && gameState.currentTeam === 1 && !team2.finished) {
-        showToast("🏁 Đội A Keng đã cán đích (+50⭐)! Đội A Mây được đi nốt lượt cuối cùng để so tài tổng điểm!");
       }
 
       // Chuyển lượt sang đội còn lại
@@ -3522,32 +3748,54 @@
     }
 
     function openVictoryModal() {
-      gameState.phase = GAME_STATES.GAMEOVER;
+      gameState.phase = GAME_STATES.GAME_OVER;
       updateHUD();
 
       const team1 = gameState.teams[1];
       const team2 = gameState.teams[2];
 
-      document.getElementById('victory-score-team-1').innerText = team1.score;
-      document.getElementById('victory-score-team-2').innerText = team2.score;
+      const sc1 = document.getElementById('victory-score-1');
+      const sc2 = document.getElementById('victory-score-2');
+      if (sc1) sc1.innerText = `${team1.score} ⭐`;
+      if (sc2) sc2.innerText = `${team2.score} ⭐`;
+
+      const slot1 = document.getElementById('victory-slot-1');
+      const slot2 = document.getElementById('victory-slot-2');
+      if (slot1) slot1.classList.remove('winner-glow');
+      if (slot2) slot2.classList.remove('winner-glow');
 
       const headline = document.getElementById('victory-headline');
       const subtext = document.getElementById('victory-subtext');
 
       if (team1.score > team2.score) {
-        headline.innerText = "🏆 ĐỘI A KENG CHIẾN THẮNG!";
-        subtext.innerText = `Xuất sắc đạt ${team1.score} Sao Zèng (Hơn ${team1.score - team2.score} sao) - Vinh danh Vua Chữ Đại Ngàn!`;
+        headline.innerText = "🎉 CHÚC MỪNG ĐỘI A KENG CHIẾN THẮNG! 🏆";
+        headline.style.color = "#e11d48";
+        subtext.innerText = `Đội A Keng xuất sắc giành quán quân với ${team1.score} Sao Zèng (nhiều hơn ${team1.score - team2.score} ⭐)!`;
+        if (slot1) slot1.classList.add('winner-glow');
       } else if (team2.score > team1.score) {
-        headline.innerText = "🏆 ĐỘI A MÂY CHIẾN THẮNG!";
-        subtext.innerText = `Xuất sắc đạt ${team2.score} Sao Zèng (Hơn ${team2.score - team1.score} sao) - Vinh danh Vua Chữ Đại Ngàn!`;
+        headline.innerText = "🎉 CHÚC MỪNG ĐỘI A MÂY CHIẾN THẮNG! 🏆";
+        headline.style.color = "#0284c7";
+        subtext.innerText = `Đội A Mây xuất sắc giành quán quân với ${team2.score} Sao Zèng (nhiều hơn ${team2.score - team1.score} ⭐)!`;
+        if (slot2) slot2.classList.add('winner-glow');
       } else {
-        headline.innerText = "🤝 HAI ĐỘI HÒA NHAU VANG DỘI!";
-        subtext.innerText = `Cả hai đội đều đạt ${team1.score} Sao Zèng - Bản làng no ấm, rạng rỡ tri thức!`;
+        headline.innerText = "🎉 CHÚC MỪNG HAI ĐỘI CÙNG CHIẾN THẮNG! 🏆";
+        headline.style.color = "#b45309";
+        subtext.innerText = `Cả hai đội ngang tài ngang sức cùng đạt ${team1.score} Sao Zèng!`;
+        if (slot1) slot1.classList.add('winner-glow');
+        if (slot2) slot2.classList.add('winner-glow');
       }
 
-      SoundEffects.victoryFanfare();
-      launchConfetti(150);
       document.getElementById('modal-victory').classList.add('open');
+
+      // Bắn liên hoàn 5 đợt pháo hoa rực rỡ + nhạc chiến thắng vang dội
+      SoundEffects.victoryFanfare();
+      setTimeout(() => SoundEffects.correctChime(), 450);
+      setTimeout(() => SoundEffects.victoryFanfare(), 950);
+
+      launchConfetti(140);
+      setTimeout(() => launchConfetti(120), 600);
+      setTimeout(() => launchConfetti(120), 1300);
+      setTimeout(() => launchConfetti(100), 2100);
     }
 
     function resetGameSession() {
@@ -3612,7 +3860,7 @@
         }
       });
 
-      localStorage.setItem('SAC_ZENG_STATIONS_DATA_V4', JSON.stringify(stations));
+      localStorage.setItem('SAC_ZENG_STATIONS_DATA_V12', JSON.stringify(stations));
       renderStationsOnMap();
       closeEditorModal();
       showToast("💾 Đã lưu bộ câu hỏi mới thành công!");
@@ -3620,7 +3868,7 @@
 
     function resetDefaultData() {
       if (confirm("Thầy/Cô có muốn khôi phục về bộ dữ liệu mặc định ban đầu không?")) {
-        localStorage.removeItem('SAC_ZENG_STATIONS_DATA_V4');
+        localStorage.removeItem('SAC_ZENG_STATIONS_DATA_V12');
         stations = JSON.parse(JSON.stringify(DEFAULT_STATIONS));
         openEditorModal();
         renderStationsOnMap();
@@ -3741,7 +3989,19 @@
       }
 
       document.getElementById('btn-show-hint').addEventListener('click', handleShowHint);
-      document.getElementById('btn-show-answer').addEventListener('click', handleShowAnswer);
+      document.getElementById('btn-show-answer').addEventListener('click', () => handleShowAnswer(true));
+      const hudT1 = document.getElementById('hud-team-1');
+      if (hudT1) hudT1.addEventListener('click', () => selectActiveTeam(1));
+      const hudT2 = document.getElementById('hud-team-2');
+      if (hudT2) hudT2.addEventListener('click', () => selectActiveTeam(2));
+      const btnSwitch = document.getElementById('btn-switch-team');
+      if (btnSwitch) btnSwitch.addEventListener('click', () => selectActiveTeam(gameState.currentTeam === 1 ? 2 : 1));
+      const dockAv = document.getElementById('dock-team-avatar');
+      if (dockAv) {
+        dockAv.style.cursor = 'pointer';
+        dockAv.title = 'Bấm để đổi đội đi trước / chuyển lượt';
+        dockAv.addEventListener('click', () => selectActiveTeam(gameState.currentTeam === 1 ? 2 : 1));
+      }
       document.getElementById('btn-verdict-correct').addEventListener('click', handleVerdictCorrect);
       document.getElementById('btn-verdict-retry').addEventListener('click', handleVerdictRetry);
       // Nút trong Cửa sổ chiến thắng
@@ -3758,6 +4018,8 @@
 
       // Bộ soạn bài
       document.getElementById('btn-open-editor').addEventListener('click', openEditorModal);
+      const btnVic = document.getElementById('btn-open-victory');
+      if (btnVic) btnVic.addEventListener('click', openVictoryModal);
       document.getElementById('btn-close-editor').addEventListener('click', closeEditorModal);
       document.getElementById('btn-save-editor').addEventListener('click', saveEditorChanges);
       document.getElementById('btn-reset-default-data').addEventListener('click', resetDefaultData);
@@ -3775,7 +4037,6 @@
   <div class="loom-dice-overlay" id="loom-dice-overlay">
     <div class="loom-dice-modal">
       <div class="loom-modal-header">
-        <span style="font-size: 1.8rem;">🧵</span>
         <h3 id="loom-dice-title">KHUNG DỆT ĐANG TUNG THOI...</h3>
       </div>
 
