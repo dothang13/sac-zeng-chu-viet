@@ -3491,19 +3491,12 @@
       gameState.currentStation = landedStation;
       gameState.rewardCollectedInTurn = false;
 
-      // Kiểm tra nếu đến ô 24 (Về Đích)
+      // Kiểm tra nếu đến ô 20 (Về Đích): Phải trả lời ĐÚNG câu hỏi cuối mới được công nhận Về Đích!
       if (landedStation.id === 20) {
-        activeTeam.finished = true;
-        activeTeam.score += landedStation.bonus;
-        updateHUD();
-        SoundEffects.victoryFanfare();
-        launchConfetti(120);
-        showToast(`🏁 ${activeTeam.name} đã VỀ ĐÍCH tại Nhà Rông Văn Hóa (+${landedStation.bonus}⭐)!`);
-
-        // Mở popup thử thách tổng kết đích đến
+        showToast(`🏁 ${activeTeam.name} đã tới Trạm Đích (Nhà Rông Lớn)! Hãy giải đúng từ khóa cuối cùng để VỀ ĐÍCH!`);
         setTimeout(() => {
           openChallengeModal(landedStation);
-        }, 600);
+        }, 500);
         return;
       }
 
@@ -3539,13 +3532,6 @@
       updatePlayerTokensPosition();
       renderTrailSvg();
 
-      if (station.id === 20) {
-        activeTeam.finished = true;
-        activeTeam.score += station.bonus;
-        updateHUD();
-        SoundEffects.victoryFanfare();
-        launchConfetti(120);
-      }
       openChallengeModal(station);
     }
 
@@ -3680,9 +3666,14 @@
     function handleVerdictCorrect() {
       aiVoiceEngine.stop();
       const activeTeam = gameState.teams[gameState.currentTeam];
-      
+      const isFinishStation = (gameState.currentStation && gameState.currentStation.id === 20);
+
+      if (isFinishStation) {
+        activeTeam.finished = true;
+      }
+
       if (!gameState.rewardCollectedInTurn) {
-        const rewardPoints = 20;
+        const rewardPoints = isFinishStation ? 50 : 20;
         activeTeam.score += rewardPoints;
         gameState.rewardCollectedInTurn = true;
         updateHUD();
@@ -3715,8 +3706,19 @@
     // Giáo viên xác nhận: HỌC VIÊN CHƯA ĐÚNG -> CHO PHÉP THỬ LẠI
         // Giáo viên xác nhận: CHƯA ĐÚNG -> OUT RA NGOÀI LUÔN VÀ ĐỔI LƯỢT
     function handleVerdictRetry() {
-      SoundEffects.retryTone();
-      showToast("Chưa đúng! Đổi lượt sang đội tiếp theo.");
+      aiVoiceEngine.stop();
+      const activeTeam = gameState.teams[gameState.currentTeam];
+      // Nếu ở ô Đích (20) mà trả lời Chưa đúng -> Không được tính về đích, lùi lại 1 ô (về ô 19) để lượt sau tung xúc xắc vào lại
+      if (gameState.currentStation && gameState.currentStation.id === 20) {
+        activeTeam.finished = false;
+        activeTeam.position = 19;
+        updatePlayerTokensPosition();
+        SoundEffects.retryTone();
+        showToast(`❌ Chưa đúng! ${activeTeam.name} chưa vượt qua thử thách Đích Đến, lùi về ô 19 và đổi lượt!`);
+      } else {
+        SoundEffects.retryTone();
+        showToast("❌ Chưa đúng! Đổi lượt sang đội tiếp theo.");
+      }
       closeChallengeModal();
       checkGameCompletionOrNextTurn();
     }
