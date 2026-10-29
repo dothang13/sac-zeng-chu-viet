@@ -2435,7 +2435,7 @@
         question: "Hạt vàng đều tăm tắp, bọc trong lớp áo bẹ xanh, luộc hay nướng đều thơm ngọt bùi. Đố bạn là quả gì?",
         pacoWord: "a - ưm",
         ttsVi: "Bờ, ắp, bắp, sắc, BẮP!",
-        ttsPaco: "Tiếng Pa Cô là: A, ưm!",
+        ttsPaco: "Tiếng Pa Cô là: a ưm!",
         bonus: 10
       },
       {
@@ -2483,7 +2483,7 @@
         question: "Màu của ánh nắng sớm mai, màu của quả chuối chín và cánh đồng lúa chín. Là màu gì?",
         pacoWord: "raq",
         ttsVi: "Vờ, ang, vang, huyền, VÀNG!",
-        ttsPaco: "Tiếng Pa Cô là: raq!",
+        ttsPaco: "Tiếng Pa Cô là: ra!",
         bonus: 10
       },
       {
@@ -2499,7 +2499,7 @@
         question: "Thân gỗ tròn đứng thẳng tắp, cùng nhau gánh đỡ cả mái nhà sàn vững chãi. Đố bạn là cái gì?",
         pacoWord: "Ti nool",
         ttsVi: "Cờ, ốt, cốt, nặng, CỘT!",
-        ttsPaco: "Tiếng Pa Cô là: ti nun!",
+        ttsPaco: "Tiếng Pa Cô là: Ti non!",
         bonus: 10
       },
       {
@@ -2579,7 +2579,7 @@
         question: "Nở ngát hương thơm giữa đầm nước, cánh hồng nhị vàng, gần bùn mà chẳng hôi tanh mùi bùn. Là hoa gì?",
         pacoWord: "piêr Sen",
         ttsVi: "Sờ, en, sen!",
-        ttsPaco: "Tiếng Pa Cô là: piêr Sen!",
+        ttsPaco: "Tiếng Pa Cô là: pia rờ!",
         bonus: 10
       },
       {
@@ -2595,7 +2595,7 @@
         question: "Chất nước nhiều màu sắc, dùng cọ quét lên tường nhà hay cửa gỗ cho mới và đẹp. Đố bạn là gì?",
         pacoWord: "poảnh dung",
         ttsVi: "Sờ, ơn, sơn!",
-        ttsPaco: "Tiếng Pa Cô là: poảnh đung!",
+        ttsPaco: "Tiếng Pa Cô là: pệch!",
         bonus: 10
       },
       {
@@ -2611,7 +2611,7 @@
         question: "Quả hình tròn, vỏ vàng mọng nước, bóc ra nhiều múi ngọt mát giàu vitamin. Đố bạn là quả gì?",
         pacoWord: "piêh Kam",
         ttsVi: "Cờ, am, cam!",
-        ttsPaco: "Tiếng Pa Cô là: piêh Kam!",
+        ttsPaco: "Tiếng Pa Cô là: pi ê cam!",
         bonus: 10
       },
       {
@@ -2627,7 +2627,7 @@
         question: "Những hạt nhỏ li ti màu vàng mịn màng, trải dài khắp bãi biển mênh mông sóng vỗ rì rào. Là gì?",
         pacoWord: "A keenh Biển",
         ttsVi: "Cờ, át, cát, sắc, CÁT!",
-        ttsPaco: "Tiếng Pa Cô là: A keenh Biển!",
+        ttsPaco: "Tiếng Pa Cô là: A kêng biển!",
         bonus: 10
       },
       {
@@ -2643,7 +2643,7 @@
         question: "Đàn ong chăm chỉ đi tìm phấn hoa, chắt chiu từng giọt sánh vàng ngọt lịm. Đố bạn gọi là gì?",
         pacoWord: "Daq ki yiêt",
         ttsVi: "Mờ, ất, mất, nặng, MẬT!",
-        ttsPaco: "Tiếng Pa Cô là: Đác ki diết!",
+        ttsPaco: "Tiếng Pa Cô là: Đạ ki diết!",
         bonus: 10
       },
       {
@@ -2769,7 +2769,7 @@
         // File audio neural studio đã tạo sẵn trong assets/audio/
         // type: 'female' (Hoài My), 'male' (Nam Minh), 'paco' (Tiếng Pa Cô)
         const isHttp = window.location.protocol.startsWith('http');
-        const cacheBuster = isHttp ? '?v=16' : '';
+        const cacheBuster = isHttp ? '?v=20261029_v20' : '';
         const audioPath = `assets/audio/station_${stationId}_${type}.mp3${cacheBuster}`;
         const audio = new Audio(audioPath);
         this.currentAudio = audio;
@@ -3114,8 +3114,8 @@
        5. KHỞI TẠO BẢN ĐỒ 24 Ô & VẼ ĐƯỜNG MÒN SVG UỐN LƯỢN
        ========================================================================== */
         function loadStationsData() {
-      ['SAC_ZENG_STATIONS_DATA', 'SAC_ZENG_STATIONS_DATA_V1', 'SAC_ZENG_STATIONS_DATA_V2', 'SAC_ZENG_STATIONS_DATA_V10', 'SAC_ZENG_STATIONS_DATA_V13'].forEach(k => { try { localStorage.removeItem(k); } catch(e){} });
-      const saved = localStorage.getItem('SAC_ZENG_STATIONS_DATA_V13');
+      ['SAC_ZENG_STATIONS_DATA', 'SAC_ZENG_STATIONS_DATA_V20', 'SAC_ZENG_STATIONS_DATA_V20', 'SAC_ZENG_STATIONS_DATA_V20', 'SAC_ZENG_STATIONS_DATA_V20', 'SAC_ZENG_STATIONS_DATA_V20', 'SAC_ZENG_STATIONS_DATA_V20', 'SAC_ZENG_STATIONS_DATA_V20', 'SAC_ZENG_STATIONS_DATA_V20', 'SAC_ZENG_STATIONS_DATA_V20', 'SAC_ZENG_STATIONS_DATA_V20'].forEach(k => { try { localStorage.removeItem(k); } catch(e){} });
+      const saved = localStorage.getItem('SAC_ZENG_STATIONS_DATA_V20');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -3862,7 +3862,7 @@
         }
       });
 
-      localStorage.setItem('SAC_ZENG_STATIONS_DATA_V13', JSON.stringify(stations));
+      localStorage.setItem('SAC_ZENG_STATIONS_DATA_V20', JSON.stringify(stations));
       renderStationsOnMap();
       closeEditorModal();
       showToast("💾 Đã lưu bộ câu hỏi mới thành công!");
@@ -3870,7 +3870,7 @@
 
     function resetDefaultData() {
       if (confirm("Thầy/Cô có muốn khôi phục về bộ dữ liệu mặc định ban đầu không?")) {
-        localStorage.removeItem('SAC_ZENG_STATIONS_DATA_V13');
+        localStorage.removeItem('SAC_ZENG_STATIONS_DATA_V20');
         stations = JSON.parse(JSON.stringify(DEFAULT_STATIONS));
         openEditorModal();
         renderStationsOnMap();
